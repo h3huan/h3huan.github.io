@@ -6,7 +6,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base:'/tool_game_site/',
+  base:'/',
   plugins: [
     vue(),
     // 删除整个 vueI18n 插件的配置块

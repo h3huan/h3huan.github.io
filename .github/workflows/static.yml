@@ -1,27 +1,27 @@
-# 将静态内容部署到 GitHub Pages 的简易工作流程
-name: Deploy static content to Pages
+# 将 Nuxt 静态网站部署到 GitHub Pages 的工作流程
+name: Deploy Nuxt static site to Pages
 
 on:
-  # 仅在推送到默认分支时运行。
+  # 仅在推送到默认分支时运行
   push:
     branches: ['main']
 
-  # 这个选项可以使你手动在 Action tab 页面触发工作流
+  # 允许你手动在 "Actions" 标签页触发此工作流
   workflow_dispatch:
 
-# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages。
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 允许一个并发的部署
+# 只允许一个并发部署，当有新的部署时取消正在进行的部署
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  # 单次部署的工作描述
+  # 部署工作
   deploy:
     environment:
       name: github-pages
@@ -30,22 +30,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20 # 你可以根据项目需求更改 Node.js 版本
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
+        run: npm ci # 使用 npm ci 更快、更可靠
+      - name: Static site generation
+        # 【修改点 1】运行 `npm run generate` 来生成静态文件
+        # 请确保你的 package.json 中有 "generate": "nuxi generate" 这个脚本
+        run: npm run generate
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist folder
-          path: './dist'
+          # 【修改点 2】上传 Nuxt 3 生成的静态文件目录
+          # 这是与原文件最关键的区别
+          path: './.output/public'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

@@ -1,22 +1,60 @@
 <template>
-  <div id="app-container">
-    <main>
-      <router-view />
+  <div id="app-layout">
+    <header class="main-header">
+      <nav>
+        <NuxtLink to="/">主页</NuxtLink>
+        <NuxtLink to="/caculate">计算器</NuxtLink>
+      </nav>
+    </header>
+
+    <main class="page-content">
+      <NuxtPage />
     </main>
+
+    <footer class="main-footer">
+      <p>版权所有 © 2025 My Awesome App</p>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-// 现在这里通常是空的，或者只处理非常全局的逻辑
+// 这里可以放置全局的逻辑，例如监听屏幕尺寸变化等
 </script>
 
-<style>
-/* 建议将全局样式放在一个单独的文件中，如 assets/main.css */
-/* 这里可以保留一些应用根级别的样式 */
-#app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: sans-serif;
+<style scoped>
+/* 这里是针对主布局的样式 */
+#app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-header {
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.main-header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main-header a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.page-content {
+  flex-grow: 1; /* 让主内容区域占据剩余空间 */
+}
+
+.main-footer {
+  padding: 1rem 2rem;
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  margin-top: auto; /* 确保页脚始终在底部 */
 }
 </style>

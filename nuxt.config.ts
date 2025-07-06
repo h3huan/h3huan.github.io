@@ -26,6 +26,11 @@ export default defineNuxtConfig({
 //   css: ['@/assets/styles/global.css'],
 
   devtools: { enabled: true },
+
+  site: {
+    url: 'https://h3huan.github.io', // 请将这里替换成你自己的域名
+  },
+
   modules: [
     '@nuxtjs/sitemap',
     'nuxt-simple-robots',

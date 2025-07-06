@@ -706,6 +706,10 @@ const _inlineRuntimeConfig = {
         "include": [],
         "exclude": [
           "/_**",
+          "/assets/**",
+          "/assets/**",
+          "/assets/**",
+          "/assets/**",
           "/assets/**"
         ],
         "includeAppSources": true
@@ -724,6 +728,11 @@ const _inlineRuntimeConfig = {
         "_context": "package.json",
         "_priority": -10,
         "name": "tool_game_site"
+      },
+      {
+        "_priority": -3,
+        "_context": "nuxt-site-config:config",
+        "url": "https://h3huan.github.io"
       }
     ],
     "version": "3.2.2",
@@ -745,6 +754,10 @@ const _inlineRuntimeConfig = {
       }
     ],
     "sitemap": [
+      "/sitemap.xml",
+      "/sitemap.xml",
+      "/sitemap.xml",
+      "/sitemap.xml",
       "/sitemap.xml"
     ],
     "robotsEnabledValue": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",

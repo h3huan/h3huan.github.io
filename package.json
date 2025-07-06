@@ -24,7 +24,7 @@
     "npm-run-all2": "^7.0.2",
     "nuxt": "latest",
     "nuxt-gtag": "^3.0.3",
-    "nuxt-simple-robots": "^3.1.10",
+    "nuxt-simple-robots": "^4.0.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
     "typescript": "~5.8.0",

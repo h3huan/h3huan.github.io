@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   site: {
-    url: 'https://h3huan.github.io', // 请将这里替换成你自己的域名
+    url: 'https://toool.eu.cc/', // 请将这里替换成你自己的域名
   },
 
   modules: [

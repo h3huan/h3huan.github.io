@@ -1,7 +1,7 @@
 <template>
   <div class="calculator-wrapper">
     <div class="calculator-card">
-      
+
       <header class="calculator-header">
         <h1>日常开支计算器</h1>
         <p>轻松记录和计算您的每一笔花费</p>
@@ -11,43 +11,43 @@
         <label for="budget-input">总预算:</label>
         <div class="input-container">
           <span>¥</span>
-          <input 
-            type="number" 
-            id="budget-input" 
+          <input
+            type="number"
+            id="budget-input"
             v-model.number="budget"
-            placeholder="输入您的总预算" 
-            min="0" 
+            placeholder="输入您的总预算"
+            min="0"
             step="0.01"
           >
         </div>
       </div>
 
       <transition-group name="list" tag="div" class="item-list">
-        <div 
-          v-for="item in items" 
-          :key="item.id" 
+        <div
+          v-for="item in items"
+          :key="item.id"
           class="item-row"
           :class="{ 'is-disabled': !item.enabled }"
         >
-          <input 
-            type="checkbox" 
+          <input
+            type="checkbox"
             v-model="item.enabled"
             class="item-toggle"
           >
-          <input 
-            type="text" 
+          <input
+            type="text"
             v-model="item.name"
             :disabled="!item.enabled"
             class="item-description"
             placeholder="费用说明 (例如: 咖啡)"
           >
-          <input 
-            type="number" 
+          <input
+            type="number"
             v-model.number="item.amount"
             :disabled="!item.enabled"
             class="item-amount"
-            placeholder="金额" 
-            min="0" 
+            placeholder="金额"
+            min="0"
             step="0.01"
           >
           <button @click="removeItem(item.id)" class="item-remove-btn" title="删除项目">
@@ -69,7 +69,7 @@
         </div>
         <div class="summary-row">
           <span class="summary-label">剩余预算:</span>
-          <span 
+          <span
             class="summary-value remaining-amount"
             :class="remainingAmount < 0 ? 'is-negative' : 'is-positive'"
           >
@@ -137,9 +137,7 @@ const removeItem = (id: string) => {
 };
 </script>
 
-
-<style scoped>
-/* 定义颜色和样式的变量，方便统一修改 */
+<style>
 :root {
   --color-bg: #f1f5f9;
   --color-card-bg: #ffffff;
@@ -153,7 +151,9 @@ const removeItem = (id: string) => {
   --color-success: #16a34a;
   --font-main: 'Inter', 'Noto Sans SC', sans-serif;
 }
+</style>
 
+<style scoped>
 .calculator-wrapper {
   background-color: var(--color-bg);
   display: flex;
@@ -254,7 +254,7 @@ input:focus {
   width: 1.15rem;
   height: 1.15rem;
   cursor: pointer;
-  accent-color: var(--color-danger);
+  accent-color: var(--color-accent); /* Changed from danger to accent for consistency */
 }
 
 .item-description {

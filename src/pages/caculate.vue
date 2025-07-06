@@ -86,7 +86,7 @@
 import { ref, computed } from 'vue';
 useSeoMeta({
   title: '日常开支计算器',
-  description: '懒人算帐, 简易出入帐估算',
+  description: '懒人账单 快捷记账 在线预算 简易出入账估算计算器',
   ogTitle: 'aki', // Open Graph 标题，用于社交分享
   // ... 其他SEO相关的 meta 标签
 })
@@ -191,6 +191,8 @@ const removeItem = (id: string) => {
 
 .input-group {
   margin-bottom: 2rem;
+  /* padding-left: 1.9rem; */
+   /* 1.15rem (复选框宽度) + 0.75rem (间距) */
 }
 
 .input-group label {

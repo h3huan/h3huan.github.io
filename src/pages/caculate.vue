@@ -84,6 +84,12 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+useSeoMeta({
+  title: '日常开支计算器',
+  description: '懒人算帐, 简易出入帐估算',
+  ogTitle: 'aki', // Open Graph 标题，用于社交分享
+  // ... 其他SEO相关的 meta 标签
+})
 
 // 定义项目的数据结构接口
 interface Item {

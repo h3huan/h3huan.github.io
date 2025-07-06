@@ -17,6 +17,12 @@
 <script setup lang="ts">
 import ToolCard from '../components/ToolCard.vue';
 import { ref } from 'vue';
+useSeoMeta({
+  title: '杂货箱',
+  description: '通过此页面联系我们，获取支持。',
+  ogTitle: '联系方式 - 我的网站', // Open Graph 标题，用于社交分享
+  // ... 其他SEO相关的 meta 标签
+})
 
 const tools = ref([
   // 将 "简易算帐" 的 url 指向我们在路由中定义的路径

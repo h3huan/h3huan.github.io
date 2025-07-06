@@ -10,6 +10,7 @@ declare global {
   const clearNuxtState: typeof import('../../node_modules/nuxt/dist/app/composables/state')['clearNuxtState']
   const computed: typeof import('vue')['computed']
   const createError: typeof import('../../node_modules/nuxt/dist/app/composables/error')['createError']
+  const createSitePathResolver: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils')['createSitePathResolver']
   const customRef: typeof import('vue')['customRef']
   const defineAppConfig: typeof import('../../node_modules/nuxt/dist/app/nuxt')['defineAppConfig']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
@@ -22,6 +23,7 @@ declare global {
   const definePayloadPlugin: typeof import('../../node_modules/nuxt/dist/app/nuxt')['definePayloadPlugin']
   const definePayloadReducer: typeof import('../../node_modules/nuxt/dist/app/composables/payload')['definePayloadReducer']
   const definePayloadReviver: typeof import('../../node_modules/nuxt/dist/app/composables/payload')['definePayloadReviver']
+  const defineRobotMeta: typeof import('../../node_modules/nuxt-simple-robots/dist/runtime/composables/defineRobotMeta')['defineRobotMeta']
   const effect: typeof import('vue')['effect']
   const effectScope: typeof import('vue')['effectScope']
   const getAppManifest: typeof import('../../node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']
@@ -93,6 +95,7 @@ declare global {
   const tryUseNuxtApp: typeof import('../../node_modules/nuxt/dist/app/nuxt')['tryUseNuxtApp']
   const unref: typeof import('vue')['unref']
   const updateAppConfig: typeof import('../../node_modules/nuxt/dist/app/config')['updateAppConfig']
+  const updateSiteConfig: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/updateSiteConfig')['updateSiteConfig']
   const useAppConfig: typeof import('../../node_modules/nuxt/dist/app/config')['useAppConfig']
   const useAsyncData: typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']
   const useAttrs: typeof import('vue')['useAttrs']
@@ -101,6 +104,7 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useError: typeof import('../../node_modules/nuxt/dist/app/composables/error')['useError']
   const useFetch: typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']
+  const useGtag: typeof import('../../node_modules/nuxt-gtag/dist/runtime/composables/useGtag')['useGtag']
   const useHead: typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHead']
   const useHeadSafe: typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHeadSafe']
   const useHydration: typeof import('../../node_modules/nuxt/dist/app/composables/hydrate')['useHydration']
@@ -110,6 +114,7 @@ declare global {
   const useLink: typeof import('../../node_modules/vue-router')['useLink']
   const useLoadingIndicator: typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator')['useLoadingIndicator']
   const useModel: typeof import('vue')['useModel']
+  const useNitroOrigin: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/useNitroOrigin')['useNitroOrigin']
   const useNuxtApp: typeof import('../../node_modules/nuxt/dist/app/nuxt')['useNuxtApp']
   const useNuxtData: typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']
   const useNuxtDevTools: typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']
@@ -157,9 +162,11 @@ declare global {
   const useServerHeadSafe: typeof import('../../node_modules/nuxt/dist/app/composables/head')['useServerHeadSafe']
   const useServerSeoMeta: typeof import('../../node_modules/nuxt/dist/app/composables/head')['useServerSeoMeta']
   const useShadowRoot: typeof import('vue')['useShadowRoot']
+  const useSiteConfig: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/useSiteConfig')['useSiteConfig']
   const useSlots: typeof import('vue')['useSlots']
   const useState: typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
+  const useTrackEvent: typeof import('../../node_modules/nuxt-gtag/dist/runtime/composables/useTrackEvent')['useTrackEvent']
   const useTransitionState: typeof import('vue')['useTransitionState']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
@@ -171,6 +178,8 @@ declare global {
   const withMemo: typeof import('vue')['withMemo']
   const withModifiers: typeof import('vue')['withModifiers']
   const withScopeId: typeof import('vue')['withScopeId']
+  const withSiteTrailingSlash: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils')['withSiteTrailingSlash']
+  const withSiteUrl: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils')['withSiteUrl']
 }
 // for type re-export
 declare global {
@@ -191,6 +200,7 @@ declare module 'vue' {
     readonly clearNuxtState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/state')['clearNuxtState']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['createError']>
+    readonly createSitePathResolver: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils')['createSitePathResolver']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['defineAppConfig']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
@@ -203,6 +213,7 @@ declare module 'vue' {
     readonly definePayloadPlugin: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['definePayloadPlugin']>
     readonly definePayloadReducer: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['definePayloadReducer']>
     readonly definePayloadReviver: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['definePayloadReviver']>
+    readonly defineRobotMeta: UnwrapRef<typeof import('../../node_modules/nuxt-simple-robots/dist/runtime/composables/defineRobotMeta')['defineRobotMeta']>
     readonly effect: UnwrapRef<typeof import('vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly getAppManifest: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']>
@@ -274,6 +285,7 @@ declare module 'vue' {
     readonly tryUseNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['tryUseNuxtApp']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly updateAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/config')['updateAppConfig']>
+    readonly updateSiteConfig: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/updateSiteConfig')['updateSiteConfig']>
     readonly useAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/config')['useAppConfig']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
@@ -282,6 +294,7 @@ declare module 'vue' {
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['useError']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']>
+    readonly useGtag: UnwrapRef<typeof import('../../node_modules/nuxt-gtag/dist/runtime/composables/useGtag')['useGtag']>
     readonly useHead: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useHeadSafe']>
     readonly useHydration: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/hydrate')['useHydration']>
@@ -291,6 +304,7 @@ declare module 'vue' {
     readonly useLink: UnwrapRef<typeof import('../../node_modules/vue-router')['useLink']>
     readonly useLoadingIndicator: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator')['useLoadingIndicator']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
+    readonly useNitroOrigin: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/useNitroOrigin')['useNitroOrigin']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
     readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
@@ -338,9 +352,11 @@ declare module 'vue' {
     readonly useServerHeadSafe: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useServerHeadSafe']>
     readonly useServerSeoMeta: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/head')['useServerSeoMeta']>
     readonly useShadowRoot: UnwrapRef<typeof import('vue')['useShadowRoot']>
+    readonly useSiteConfig: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/useSiteConfig')['useSiteConfig']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/state')['useState']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
+    readonly useTrackEvent: UnwrapRef<typeof import('../../node_modules/nuxt-gtag/dist/runtime/composables/useTrackEvent')['useTrackEvent']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
@@ -352,5 +368,7 @@ declare module 'vue' {
     readonly withMemo: UnwrapRef<typeof import('vue')['withMemo']>
     readonly withModifiers: UnwrapRef<typeof import('vue')['withModifiers']>
     readonly withScopeId: UnwrapRef<typeof import('vue')['withScopeId']>
+    readonly withSiteTrailingSlash: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils')['withSiteTrailingSlash']>
+    readonly withSiteUrl: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils')['withSiteUrl']>
   }
 }

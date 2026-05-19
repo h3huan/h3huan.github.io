@@ -3,7 +3,9 @@
     <header class="main-header">
       <nav>
         <NuxtLink to="/">主页</NuxtLink>
-        <NuxtLink to="/caculate">计算器</NuxtLink>
+        <NuxtLink to="/caculate">简易算帐</NuxtLink>
+        <NuxtLink to="/comma-separator">逗号分隔器</NuxtLink>
+        <NuxtLink to="/md-excel">MD ↔ Excel</NuxtLink>
       </nav>
     </header>
 

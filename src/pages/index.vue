@@ -25,12 +25,11 @@ useSeoMeta({
 })
 
 const tools = ref([
-  // 将 "简易算帐" 的 url 指向我们在路由中定义的路径
-  { id: 'tool1', icon: '📄', titleKey: '简易算帐', url: '/caculate' }, // <-- 修改这里
-  { id: 'tool2', icon: '⏰', titleKey: 'tools.tool2.title', url: '' }, // 示例
-  { id: 'tool3', icon: '📄', titleKey: 'tools.tool3.title', url: '' },
-  { id: 'tool4', icon: '📝', titleKey: 'tools.tool4.title', url: '' },
-  { id: 'tool5', icon: '📱', titleKey: 'tools.tool5.title', url: '' },
+  { id: 'tool1', icon: '🧾', titleKey: '简易算帐', url: '/caculate' },
+  { id: 'tool2', icon: '✂️', titleKey: '逗号分隔器', url: '/comma-separator' },
+  { id: 'tool3', icon: '📊', titleKey: 'Markdown ↔ Excel', url: '/md-excel' },
+  { id: 'tool4', icon: '📝', titleKey: '(施工中)', url: '' },
+  { id: 'tool5', icon: '📱', titleKey: '(施工中)', url: '' },
 ]);
 </script>
 

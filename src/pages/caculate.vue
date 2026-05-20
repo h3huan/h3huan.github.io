@@ -85,7 +85,9 @@ import { ref, computed } from 'vue';
 
 useSeoMeta({
   title: '日常开支计算器',
+  ogTitle: '日常开支计算器 – Toool',
   description: '懒人账单，快捷记账，在线预算，简易出入账估算计算器',
+  ogDescription: '懒人账单，快捷记账，在线预算，简易出入账估算计算器',
 })
 
 interface Item {

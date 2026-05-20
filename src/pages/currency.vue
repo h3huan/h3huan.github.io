@@ -119,7 +119,9 @@ import { ref, computed, onMounted, watch } from 'vue'
 
 useSeoMeta({
   title: '汇率计算器',
+  ogTitle: '汇率计算器 – Toool',
   description: '实时汇率换算，支持人民币、美元、欧元、日元等主要货币，数据来源欧洲央行',
+  ogDescription: '实时汇率换算，支持人民币、美元、欧元、日元等主要货币，数据来源欧洲央行',
 })
 
 const currencies = [

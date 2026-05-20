@@ -97,7 +97,9 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
 useSeoMeta({
   title: '函数绘图器',
+  ogTitle: '函数绘图器 – Toool',
   description: '在笛卡尔坐标系中绘制数学函数图像，支持 sin cos tan sqrt 等，可缩放平移',
+  ogDescription: '在笛卡尔坐标系中绘制数学函数图像，支持 sin cos tan sqrt 等，可缩放平移',
 })
 
 const BASE_SCALE = 60

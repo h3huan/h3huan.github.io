@@ -72,7 +72,9 @@ import { ref, computed } from 'vue';
 
 useSeoMeta({
   title: '逗号分隔器',
+  ogTitle: '逗号分隔器 – Toool',
   description: '将文本按行分割，快速转换为逗号分隔或逗号单引号分隔格式，适用于 SQL IN 查询等场景',
+  ogDescription: '将文本按行分割，快速转换为逗号分隔或逗号单引号分隔格式，适用于 SQL IN 查询等场景',
 })
 
 const inputText = ref('');

@@ -27,6 +27,15 @@
   </div>
 </template>
 
+<script setup lang="ts">
+const route = useRoute()
+const canonical = computed(() => `https://toool.eu.cc${route.path}`)
+useHead({
+  link: [{ rel: 'canonical', href: canonical }],
+  meta: [{ property: 'og:url', content: canonical }],
+})
+</script>
+
 <style>
 /* ── Global reset & base ────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

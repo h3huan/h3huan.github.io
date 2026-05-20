@@ -87,7 +87,9 @@ import { ref, computed } from 'vue';
 
 useSeoMeta({
   title: 'Markdown 表格 ↔ Excel',
+  ogTitle: 'Markdown 表格 ↔ Excel – Toool',
   description: 'Markdown 表格与 Excel 数据互相转换，支持一键复制粘贴',
+  ogDescription: 'Markdown 表格与 Excel 数据互相转换，支持一键复制粘贴',
 })
 
 const tab = ref<'md2excel' | 'excel2md'>('md2excel');

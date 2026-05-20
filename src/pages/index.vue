@@ -77,7 +77,9 @@ import ToolCard from '../components/ToolCard.vue'
 
 useSeoMeta({
   title: '杂货箱',
+  ogTitle: '杂货箱 – Toool',
   description: '没有半点帮助的小工具集合，在线使用，无需安装',
+  ogDescription: '没有半点帮助的小工具集合，在线使用，无需安装',
 })
 
 const textTools = ref([

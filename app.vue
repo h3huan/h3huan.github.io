@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 const route = useRoute()
-const canonical = computed(() => `https://toool.eu.cc${route.path}`)
+const canonical = computed(() => `https://h3huan.github.io${route.path}`)
 useHead({
   link: [{ rel: 'canonical', href: canonical }],
   meta: [{ property: 'og:url', content: canonical }],

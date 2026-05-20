@@ -1,98 +1,89 @@
 <template>
-  <div class="tool-wrapper">
-    <div class="tool-card">
+  <div class="tool-page">
+    <div class="tool-page-inner">
 
-      <header class="tool-header">
-        <h1>Markdown 表格 ↔ Excel</h1>
-        <p>Markdown 表格与 Excel 数据互相转换</p>
-      </header>
+      <nav class="tool-back">
+        <NuxtLink to="/" class="back-link">← 返回主页</NuxtLink>
+      </nav>
 
-      <div class="tabs">
-        <button
-          :class="['tab-btn', { active: tab === 'md2excel' }]"
-          @click="tab = 'md2excel'"
-        >
-          Markdown → Excel
-        </button>
-        <button
-          :class="['tab-btn', { active: tab === 'excel2md' }]"
-          @click="tab = 'excel2md'"
-        >
-          Excel → Markdown
-        </button>
-      </div>
+      <div class="tool-card">
+        <header class="tool-header">
+          <h1>Markdown 表格 ↔ Excel</h1>
+          <p>Markdown 表格与 Excel 数据互相转换</p>
+        </header>
 
-      <!-- Markdown → Excel -->
-      <div v-if="tab === 'md2excel'" class="panel">
-        <div class="section">
-          <label class="section-label">输入 Markdown 表格</label>
-          <textarea
-            v-model="mdInput"
-            class="main-textarea"
-            rows="10"
-            spellcheck="false"
-            placeholder="| 姓名 | 年龄 | 城市 |&#10;|------|------|------|&#10;| 张三 | 25   | 北京 |&#10;| 李四 | 30   | 上海 |"
-          ></textarea>
+        <!-- Tabs -->
+        <div class="tabs">
+          <button
+            :class="['tab', { 'tab--active': tab === 'md2excel' }]"
+            @click="tab = 'md2excel'"
+          >Markdown → Excel</button>
+          <button
+            :class="['tab', { 'tab--active': tab === 'excel2md' }]"
+            @click="tab = 'excel2md'"
+          >Excel → Markdown</button>
         </div>
 
-        <div v-if="md2excelError" class="error-msg">{{ md2excelError }}</div>
-
-        <div v-if="excelOutput" class="section">
-          <div class="section-label-row">
-            <label class="section-label">复制后可直接粘贴到 Excel</label>
-            <button @click="copyExcel" class="copy-btn" :class="{ success: copiedExcel }">
-              {{ copiedExcel ? '已复制 ✓' : '复制' }}
-            </button>
+        <!-- Markdown → Excel -->
+        <div v-if="tab === 'md2excel'" class="panel">
+          <div class="field">
+            <label class="field-label">输入 Markdown 表格</label>
+            <textarea
+              v-model="mdInput"
+              class="textarea"
+              rows="9"
+              spellcheck="false"
+              placeholder="| 姓名 | 年龄 | 城市 |&#10;|------|------|------|&#10;| 张三 | 25   | 北京 |&#10;| 李四 | 30   | 上海 |"
+            ></textarea>
           </div>
-          <textarea
-            :value="excelOutput"
-            readonly
-            class="main-textarea output-textarea"
-            rows="8"
-            spellcheck="false"
-          ></textarea>
-          <p class="hint">提示：在 Excel 中选中目标单元格后粘贴即可</p>
-        </div>
-      </div>
 
-      <!-- Excel → Markdown -->
-      <div v-else class="panel">
-        <div class="section">
-          <label class="section-label">从 Excel 复制后粘贴到此处</label>
-          <textarea
-            v-model="excelInput"
-            class="main-textarea"
-            rows="10"
-            spellcheck="false"
-            placeholder="在 Excel 中选中表格区域，Ctrl+C 复制，然后粘贴到这里"
-          ></textarea>
-        </div>
+          <div v-if="md2excelError" class="msg msg--error">{{ md2excelError }}</div>
 
-        <div v-if="excel2mdError" class="error-msg">{{ excel2mdError }}</div>
-
-        <div v-if="mdOutput" class="section">
-          <div class="section-label-row">
-            <label class="section-label">Markdown 表格</label>
-            <button @click="copyMd" class="copy-btn" :class="{ success: copiedMd }">
-              {{ copiedMd ? '已复制 ✓' : '复制' }}
-            </button>
+          <div v-if="excelOutput" class="field">
+            <div class="field-row">
+              <label class="field-label">粘贴到 Excel 即可使用</label>
+              <button class="copy-btn" :class="{ 'is-copied': copiedExcel }" @click="copyExcel">
+                {{ copiedExcel ? '已复制 ✓' : '复制' }}
+              </button>
+            </div>
+            <textarea :value="excelOutput" readonly class="textarea textarea--output" rows="7" spellcheck="false"></textarea>
+            <p class="hint">提示：在 Excel 中选中目标单元格，然后粘贴（Ctrl+V / ⌘V）</p>
           </div>
-          <textarea
-            :value="mdOutput"
-            readonly
-            class="main-textarea output-textarea"
-            rows="8"
-            spellcheck="false"
-          ></textarea>
         </div>
-      </div>
 
+        <!-- Excel → Markdown -->
+        <div v-else class="panel">
+          <div class="field">
+            <label class="field-label">从 Excel 复制后粘贴到此处</label>
+            <textarea
+              v-model="excelInput"
+              class="textarea"
+              rows="9"
+              spellcheck="false"
+              placeholder="在 Excel 中选中表格区域，Ctrl+C 复制，然后粘贴到这里"
+            ></textarea>
+          </div>
+
+          <div v-if="excel2mdError" class="msg msg--error">{{ excel2mdError }}</div>
+
+          <div v-if="mdOutput" class="field">
+            <div class="field-row">
+              <label class="field-label">Markdown 表格</label>
+              <button class="copy-btn" :class="{ 'is-copied': copiedMd }" @click="copyMd">
+                {{ copiedMd ? '已复制 ✓' : '复制' }}
+              </button>
+            </div>
+            <textarea :value="mdOutput" readonly class="textarea textarea--output" rows="7" spellcheck="false"></textarea>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 
 useSeoMeta({
   title: 'Markdown 表格 ↔ Excel',
@@ -101,9 +92,9 @@ useSeoMeta({
 
 const tab = ref<'md2excel' | 'excel2md'>('md2excel');
 
-// ── Markdown → Excel ──────────────────────────────────────────
-const mdInput = ref('');
-const copiedExcel = ref(false);
+// ── Markdown → Excel (tab-separated) ─────────────────────────
+const mdInput      = ref('');
+const copiedExcel  = ref(false);
 const md2excelError = ref('');
 
 const excelOutput = computed(() => {
@@ -115,26 +106,21 @@ const excelOutput = computed(() => {
     .split('\n')
     .map(l => l.trim())
     .filter(l => l.length > 0)
-    // skip separator rows like |---|---|
-    .filter(l => !/^\|[\s|:-]+\|$/.test(l));
+    .filter(l => !/^\|[\s|:-]+\|$/.test(l)); // skip separator rows
 
-  if (rows.length === 0) return '';
+  if (!rows.length) return '';
 
-  const parsed = rows.map(row => {
-    // strip leading/trailing pipes then split
-    const stripped = row.replace(/^\|/, '').replace(/\|$/, '');
-    return stripped.split('|').map(cell => cell.trim());
-  });
+  const parsed = rows.map(row =>
+    row.replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim())
+  );
 
-  // validate consistent column count
   const colCount = parsed[0].length;
-  const invalid = parsed.some(r => r.length !== colCount);
-  if (invalid) {
+  if (parsed.some(r => r.length !== colCount)) {
     md2excelError.value = '表格列数不一致，请检查 Markdown 格式';
     return '';
   }
 
-  return parsed.map(row => row.join('\t')).join('\n');
+  return parsed.map(r => r.join('\t')).join('\n');
 });
 
 const copyExcel = async () => {
@@ -144,9 +130,9 @@ const copyExcel = async () => {
   setTimeout(() => { copiedExcel.value = false; }, 2000);
 };
 
-// ── Excel → Markdown ──────────────────────────────────────────
-const excelInput = ref('');
-const copiedMd = ref(false);
+// ── Excel (tab-separated) → Markdown ─────────────────────────
+const excelInput    = ref('');
+const copiedMd      = ref(false);
 const excel2mdError = ref('');
 
 const mdOutput = computed(() => {
@@ -158,31 +144,22 @@ const mdOutput = computed(() => {
     .split('\n')
     .map(l => l.trimEnd())
     .filter(l => l.length > 0)
-    .map(l => l.split('\t').map(cell => cell.trim()));
+    .map(l => l.split('\t').map(c => c.trim()));
 
-  if (rows.length === 0) return '';
+  if (!rows.length) return '';
 
-  // normalize all rows to the same column count
-  const colCount = Math.max(...rows.map(r => r.length));
-  const normalized = rows.map(r => {
-    while (r.length < colCount) r.push('');
-    return r;
-  });
-
-  // compute column widths (min 3 for the separator dashes)
-  const widths = Array.from({ length: colCount }, (_, ci) =>
+  const colCount  = Math.max(...rows.map(r => r.length));
+  const normalized = rows.map(r => { while (r.length < colCount) r.push(''); return r; });
+  const widths     = Array.from({ length: colCount }, (_, ci) =>
     Math.max(3, ...normalized.map(r => r[ci].length))
   );
 
-  const formatRow = (cells: string[]) =>
+  const fmt = (cells: string[]) =>
     '| ' + cells.map((c, i) => c.padEnd(widths[i])).join(' | ') + ' |';
-
-  const separator =
-    '| ' + widths.map(w => '-'.repeat(w)).join(' | ') + ' |';
+  const sep = '| ' + widths.map(w => '-'.repeat(w)).join(' | ') + ' |';
 
   const [header, ...data] = normalized;
-  const lines = [formatRow(header), separator, ...data.map(formatRow)];
-  return lines.join('\n');
+  return [fmt(header), sep, ...data.map(fmt)].join('\n');
 });
 
 const copyMd = async () => {
@@ -194,158 +171,128 @@ const copyMd = async () => {
 </script>
 
 <style scoped>
-.tool-wrapper {
-  background-color: #f1f5f9;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem 1.5rem;
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
-}
+.tool-page { padding: 1.5rem var(--page-pad) 3rem; }
+.tool-page-inner { max-width: 760px; margin: 0 auto; }
 
+/* Back link */
+.tool-back { margin-bottom: 1.25rem; }
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-text-2);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.back-link:hover { color: var(--c-accent); border-color: var(--c-accent-muted); background: var(--c-accent-bg); }
+
+/* Card */
 .tool-card {
-  width: 100%;
-  max-width: 760px;
-  background-color: #ffffff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  padding: 2.5rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.tool-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.tool-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-}
-
-.tool-header p {
-  color: #64748b;
-}
+/* Header */
+.tool-header { text-align: center; }
+.tool-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--c-text-1); letter-spacing: -0.02em; margin-bottom: 0.35rem; }
+.tool-header p  { font-size: 0.9rem; color: var(--c-text-2); }
 
 /* Tabs */
 .tabs {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-  background-color: #f1f5f9;
-  border-radius: 10px;
-  padding: 0.3rem;
+  gap: 0.4rem;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 0.25rem;
 }
-
-.tab-btn {
+.tab {
   flex: 1;
-  padding: 0.6rem 1rem;
+  padding: 0.5rem 0.75rem;
   border: none;
+  border-radius: var(--r-md);
   background: transparent;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: #64748b;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  color: var(--c-text-2);
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.tab:hover:not(.tab--active) { color: var(--c-text-1); }
+.tab--active {
+  background: var(--c-surface);
+  color: var(--c-text-1);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
-.tab-btn.active {
-  background-color: #ffffff;
-  color: #1e293b;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-}
+/* Panel */
+.panel { display: flex; flex-direction: column; gap: 1.25rem; }
 
-.tab-btn:not(.active):hover {
-  color: #334155;
-}
+/* Fields */
+.field { display: flex; flex-direction: column; gap: 0.5rem; }
+.field-label { font-size: 0.875rem; font-weight: 600; color: var(--c-text-1); }
+.field-row { display: flex; justify-content: space-between; align-items: center; }
 
-/* Panel content */
-.panel {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.section {
-  margin-bottom: 1.75rem;
-}
-
-.section-label {
-  display: block;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #1e293b;
-  margin-bottom: 0.6rem;
-}
-
-.section-label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.6rem;
-}
-
-.main-textarea {
+/* Textarea */
+.textarea {
   width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  font-size: 0.8125rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--c-text-1);
+  background: var(--c-surface);
   resize: vertical;
-  transition: border-color 0.2s, box-shadow 0.2s;
   line-height: 1.6;
-  color: #1e293b;
-}
-
-.main-textarea:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
+.textarea:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px var(--c-accent-bg); }
+.textarea--output { background: var(--c-surface-2); color: var(--c-text-2); cursor: default; }
 
-.output-textarea {
-  background-color: #f8fafc;
-  color: #334155;
-}
-
+/* Copy button */
 .copy-btn {
-  padding: 0.35rem 0.9rem;
-  background-color: #3b82f6;
-  color: white;
+  padding: 0.3rem 0.85rem;
+  background: var(--c-accent);
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  white-space: nowrap;
+  border-radius: var(--r-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background 0.15s;
 }
+.copy-btn:hover { background: var(--c-accent-dark); }
+.copy-btn.is-copied { background: var(--c-success); }
 
-.copy-btn:hover {
-  background-color: #2563eb;
-}
-
-.copy-btn.success {
-  background-color: #16a34a;
-}
-
-.error-msg {
-  margin-bottom: 1rem;
-  padding: 0.6rem 1rem;
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  color: #dc2626;
-  font-size: 0.9rem;
-}
-
-.hint {
-  margin-top: 0.5rem;
+/* Messages */
+.msg {
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--r-md);
   font-size: 0.85rem;
-  color: #94a3b8;
+}
+.msg--error {
+  background: var(--c-danger-bg);
+  border: 1px solid #fca5a5;
+  color: var(--c-danger);
+}
+
+.hint { font-size: 0.8rem; color: var(--c-text-3); }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .tool-page { padding: 1rem var(--page-pad) 2rem; }
+  .tool-card { padding: 1.25rem 1rem; border-radius: var(--r-lg); }
+  .tab       { font-size: 0.8125rem; padding: 0.45rem 0.5rem; }
 }
 </style>

@@ -1,56 +1,98 @@
 <template>
-  <router-link :to="url" class="tool-card-link">
-    <div class="tool-card">
-      <div class="tool-icon">
-        {{ icon }}
-      </div>
-      <div class="tool-title">{{ title }}</div>
+  <!-- Linked card -->
+  <NuxtLink v-if="url" :to="url" class="tool-card">
+    <div class="card-icon">{{ icon }}</div>
+    <div class="card-body">
+      <div class="card-title">{{ title }}</div>
+      <div v-if="description" class="card-desc">{{ description }}</div>
     </div>
-  </router-link>
+    <span class="card-arrow" aria-hidden="true">→</span>
+  </NuxtLink>
+
+  <!-- Placeholder (no url) -->
+  <div v-else class="tool-card tool-card--placeholder">
+    <div class="card-icon">{{ icon }}</div>
+    <div class="card-body">
+      <div class="card-title">{{ title }}</div>
+      <div v-if="description" class="card-desc">{{ description }}</div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
-const props = defineProps<{
-  icon: string;
-  title: string;
-  url: string; // <-- 增加 url prop，用于接收跳转路径
-}>();
+defineProps<{
+  icon: string
+  title: string
+  url?: string
+  description?: string
+}>()
 </script>
 
 <style scoped>
-/* 样式保持不变 */
-.tool-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
 .tool-card {
-  background-color: var(--color-background-card);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  gap: 0.55rem;
+  padding: 1.1rem 1.1rem 1rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  box-shadow: var(--shadow-xs);
+  min-height: 110px;
+  overflow: hidden;
 }
-.tool-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+/* Active / linked card hover */
+.tool-card:not(.tool-card--placeholder):hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--c-accent-muted);
 }
-.tool-icon {
-  font-size: 36px;
-  margin-bottom: 10px;
-  color: var(--color-accent);
+
+/* Placeholder */
+.tool-card--placeholder {
+  cursor: default;
+  background: var(--c-surface-2);
+  border-style: dashed;
+  opacity: 0.6;
 }
-.tool-title {
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--color-text-primary);
+
+.card-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.card-body { flex: 1; }
+
+.card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--c-text-1);
+  line-height: 1.35;
+}
+
+.card-desc {
+  margin-top: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--c-text-3);
+  line-height: 1.4;
+}
+
+.card-arrow {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  font-size: 0.875rem;
+  color: var(--c-text-3);
+  transition: color 0.15s, transform 0.15s;
+}
+
+.tool-card:not(.tool-card--placeholder):hover .card-arrow {
+  color: var(--c-accent);
+  transform: translateX(3px);
 }
 </style>

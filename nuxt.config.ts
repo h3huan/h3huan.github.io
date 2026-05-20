@@ -56,7 +56,7 @@ export default defineNuxtConfig({
       { loc: '/caculate',        priority: 0.8, changefreq: 'monthly' },
       { loc: '/comma-separator', priority: 0.8, changefreq: 'monthly' },
       { loc: '/md-excel',        priority: 0.8, changefreq: 'monthly' },
-      { loc: '/currency',        priority: 0.8, changefreq: 'daily'   },
+      { loc: '/currency',        priority: 0.8, changefreq: 'daily'   }, 
       { loc: '/function-plot',   priority: 0.8, changefreq: 'monthly' },
     ],
   },

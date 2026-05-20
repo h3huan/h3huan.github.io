@@ -90,10 +90,10 @@ const textTools = ref([
 ])
 
 const calcTools = ref([
-  { id: 'caculate', icon: '🧾', title: '简易算帐', description: '记录开支与预算，实时计算余额', url: '/caculate' },
+  { id: 'caculate',       icon: '🧾', title: '简易算帐',    description: '记录开支与预算，实时计算余额',          url: '/caculate'       },
+  { id: 'currency',       icon: '💱', title: '汇率计算器',  description: '实时汇率，支持 20+ 主要货币',           url: '/currency'       },
+  { id: 'function-plot',  icon: '📈', title: '函数绘图器',  description: '笛卡尔坐标系，支持 sin cos sqrt 等',    url: '/function-plot'  },
   { id: 'ph5', icon: '📐', title: '施工中', description: '', url: '' },
-  { id: 'ph6', icon: '🔢', title: '施工中', description: '', url: '' },
-  { id: 'ph7', icon: '💱', title: '施工中', description: '', url: '' },
 ])
 </script>
 

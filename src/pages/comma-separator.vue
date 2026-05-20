@@ -1,62 +1,66 @@
 <template>
-  <div class="tool-wrapper">
-    <div class="tool-card">
+  <div class="tool-page">
+    <div class="tool-page-inner">
 
-      <header class="tool-header">
-        <h1>逗号分隔器</h1>
-        <p>将多行文本快速转换为逗号分隔格式</p>
-      </header>
+      <nav class="tool-back">
+        <NuxtLink to="/" class="back-link">← 返回主页</NuxtLink>
+      </nav>
 
-      <div class="section">
-        <label class="section-label">输入内容（每行一个）</label>
-        <textarea
-          v-model="inputText"
-          class="main-textarea"
-          placeholder="每行输入一个值，例如：&#10;苹果&#10;香蕉&#10;橙子"
-          rows="8"
-          spellcheck="false"
-        ></textarea>
-      </div>
+      <div class="tool-card">
+        <header class="tool-header">
+          <h1>逗号分隔器</h1>
+          <p>将多行文本快速转换为逗号分隔格式</p>
+        </header>
 
-      <div class="section options-section">
-        <label class="section-label">输出格式</label>
-        <div class="radio-group">
-          <label class="radio-label" :class="{ active: mode === 'plain' }">
-            <input type="radio" v-model="mode" value="plain">
-            <span class="radio-text">逗号分隔</span>
-            <code class="preview-code">a, b, c</code>
-          </label>
-          <label class="radio-label" :class="{ active: mode === 'quoted' }">
-            <input type="radio" v-model="mode" value="quoted">
-            <span class="radio-text">逗号单引号分隔</span>
-            <code class="preview-code">'a', 'b', 'c'</code>
-          </label>
+        <div class="field">
+          <label class="field-label">输入内容（每行一个）</label>
+          <textarea
+            v-model="inputText"
+            class="textarea"
+            rows="8"
+            spellcheck="false"
+            placeholder="每行输入一个值，例如：&#10;苹果&#10;香蕉&#10;橙子"
+          ></textarea>
         </div>
-      </div>
 
-      <div class="section">
-        <div class="section-label-row">
-          <label class="section-label">输出结果</label>
-          <div class="meta-info">
-            <span v-if="itemCount > 0" class="item-count">共 {{ itemCount }} 项</span>
-            <button
-              @click="copyResult"
-              class="copy-btn"
-              :class="{ success: copied }"
-              :disabled="!outputText"
-            >
-              {{ copied ? '已复制 ✓' : '复制' }}
-            </button>
+        <div class="options-box">
+          <span class="field-label">输出格式</span>
+          <div class="radio-group">
+            <label class="radio-item" :class="{ 'is-active': mode === 'plain' }">
+              <input type="radio" v-model="mode" value="plain">
+              <span class="radio-text">逗号分隔</span>
+              <code class="preview">a, b, c</code>
+            </label>
+            <label class="radio-item" :class="{ 'is-active': mode === 'quoted' }">
+              <input type="radio" v-model="mode" value="quoted">
+              <span class="radio-text">逗号单引号分隔</span>
+              <code class="preview">'a', 'b', 'c'</code>
+            </label>
           </div>
         </div>
-        <textarea
-          :value="outputText"
-          readonly
-          class="main-textarea output-textarea"
-          rows="4"
-          placeholder="转换结果将显示在这里..."
-          spellcheck="false"
-        ></textarea>
+
+        <div class="field">
+          <div class="field-row">
+            <label class="field-label">输出结果</label>
+            <div class="field-meta">
+              <span v-if="itemCount > 0" class="count-tag">{{ itemCount }} 项</span>
+              <button
+                class="copy-btn"
+                :class="{ 'is-copied': copied }"
+                :disabled="!outputText"
+                @click="copyResult"
+              >{{ copied ? '已复制 ✓' : '复制' }}</button>
+            </div>
+          </div>
+          <textarea
+            :value="outputText"
+            readonly
+            class="textarea textarea--output"
+            rows="4"
+            placeholder="转换结果将显示在这里…"
+            spellcheck="false"
+          ></textarea>
+        </div>
       </div>
 
     </div>
@@ -72,24 +76,20 @@ useSeoMeta({
 })
 
 const inputText = ref('');
-const mode = ref<'plain' | 'quoted'>('plain');
-const copied = ref(false);
+const mode      = ref<'plain' | 'quoted'>('plain');
+const copied    = ref(false);
 
 const lines = computed(() =>
-  inputText.value
-    .split('\n')
-    .map(l => l.trim())
-    .filter(l => l.length > 0)
+  inputText.value.split('\n').map(l => l.trim()).filter(l => l.length > 0)
 );
 
 const itemCount = computed(() => lines.value.length);
 
 const outputText = computed(() => {
-  if (lines.value.length === 0) return '';
-  if (mode.value === 'plain') {
-    return lines.value.join(', ');
-  }
-  return lines.value.map(l => `'${l}'`).join(', ');
+  if (!lines.value.length) return '';
+  return mode.value === 'plain'
+    ? lines.value.join(', ')
+    : lines.value.map(l => `'${l}'`).join(', ');
 });
 
 const copyResult = async () => {
@@ -101,173 +101,133 @@ const copyResult = async () => {
 </script>
 
 <style scoped>
-.tool-wrapper {
-  background-color: var(--color-bg, #f1f5f9);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem 1.5rem;
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
-}
+.tool-page { padding: 1.5rem var(--page-pad) 3rem; }
+.tool-page-inner { max-width: 680px; margin: 0 auto; }
 
-.tool-card {
-  width: 100%;
-  max-width: 680px;
-  background-color: #ffffff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  padding: 2.5rem;
-}
-
-.tool-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.tool-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-}
-
-.tool-header p {
-  color: #64748b;
-}
-
-.section {
-  margin-bottom: 1.75rem;
-}
-
-.section-label {
-  display: block;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #1e293b;
-  margin-bottom: 0.6rem;
-}
-
-.section-label-row {
-  display: flex;
-  justify-content: space-between;
+/* Back link */
+.tool-back { margin-bottom: 1.25rem; }
+.back-link {
+  display: inline-flex;
   align-items: center;
-  margin-bottom: 0.6rem;
-}
-
-.meta-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.item-count {
+  gap: 0.35rem;
   font-size: 0.875rem;
-  color: #64748b;
+  font-weight: 500;
+  color: var(--c-text-2);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
 }
+.back-link:hover { color: var(--c-accent); border-color: var(--c-accent-muted); background: var(--c-accent-bg); }
 
-.main-textarea {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  resize: vertical;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  line-height: 1.6;
-  color: #1e293b;
-}
-
-.main-textarea:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-
-.output-textarea {
-  background-color: #f8fafc;
-  color: #334155;
-}
-
-.options-section {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 1.2rem 1.4rem;
-}
-
-.radio-group {
+/* Card */
+.tool-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.5rem;
 }
 
-.radio-label {
+/* Header */
+.tool-header { text-align: center; }
+.tool-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--c-text-1); letter-spacing: -0.02em; margin-bottom: 0.35rem; }
+.tool-header p  { font-size: 0.9rem; color: var(--c-text-2); }
+
+/* Fields */
+.field { display: flex; flex-direction: column; gap: 0.5rem; }
+.field-label { font-size: 0.875rem; font-weight: 600; color: var(--c-text-1); }
+.field-row { display: flex; justify-content: space-between; align-items: center; }
+.field-meta { display: flex; align-items: center; gap: 0.6rem; }
+
+.count-tag {
+  font-size: 0.78rem;
+  color: var(--c-text-3);
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  padding: 0.1rem 0.5rem;
+  border-radius: 99px;
+}
+
+/* Textarea */
+.textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  font-size: 0.875rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--c-text-1);
+  background: var(--c-surface);
+  resize: vertical;
+  line-height: 1.6;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.textarea:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px var(--c-accent-bg); }
+.textarea--output { background: var(--c-surface-2); color: var(--c-text-2); cursor: default; }
+
+/* Options box */
+.options-box {
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.radio-item {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  padding: 0.6rem 0.8rem;
-  border-radius: 8px;
+  gap: 0.55rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--r-md);
   border: 1px solid transparent;
-  transition: background-color 0.15s, border-color 0.15s;
-}
-
-.radio-label:hover {
-  background-color: #eff6ff;
-}
-
-.radio-label.active {
-  background-color: #eff6ff;
-  border-color: #bfdbfe;
-}
-
-.radio-label input[type="radio"] {
-  accent-color: #3b82f6;
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-}
-
-.radio-text {
-  font-size: 0.95rem;
-  color: #334155;
-  font-weight: 500;
-}
-
-.preview-code {
-  margin-left: auto;
-  background-color: #e2e8f0;
-  color: #475569;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-}
-
-.copy-btn {
-  padding: 0.35rem 0.9rem;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background 0.14s, border-color 0.14s;
+}
+.radio-item:hover { background: var(--c-accent-bg); }
+.radio-item.is-active { background: var(--c-accent-bg); border-color: var(--c-accent-muted); }
+.radio-item input[type="radio"] { accent-color: var(--c-accent); width: 1rem; height: 1rem; flex-shrink: 0; }
+.radio-text { font-size: 0.875rem; font-weight: 500; color: var(--c-text-1); }
+
+.preview {
+  margin-left: auto;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.78rem;
+  background: #e2e8f0;
+  color: var(--c-text-2);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--r-sm);
 }
 
-.copy-btn:hover:not(:disabled) {
-  background-color: #2563eb;
+/* Copy button */
+.copy-btn {
+  padding: 0.3rem 0.85rem;
+  background: var(--c-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background 0.15s;
 }
+.copy-btn:hover:not(:disabled) { background: var(--c-accent-dark); }
+.copy-btn:disabled { background: var(--c-border); color: var(--c-text-3); cursor: not-allowed; }
+.copy-btn.is-copied { background: var(--c-success); }
 
-.copy-btn:disabled {
-  background-color: #cbd5e1;
-  cursor: not-allowed;
-}
-
-.copy-btn.success {
-  background-color: #16a34a;
+/* Mobile */
+@media (max-width: 640px) {
+  .tool-page { padding: 1rem var(--page-pad) 2rem; }
+  .tool-card { padding: 1.25rem 1rem; border-radius: var(--r-lg); }
+  .preview   { display: none; }
 }
 </style>

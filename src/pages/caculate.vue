@@ -1,97 +1,93 @@
 <template>
-  <div class="calculator-wrapper">
-    <div class="calculator-card">
+  <div class="tool-page">
 
-      <header class="calculator-header">
-        <h1>日常开支计算器</h1>
-        <p>轻松记录和计算您的每一笔花费</p>
-      </header>
+    <div class="tool-page-inner">
+      <!-- Back nav -->
+      <nav class="tool-back">
+        <NuxtLink to="/" class="back-link">← 返回主页</NuxtLink>
+      </nav>
 
-      <div class="input-group">
-        <label for="budget-input">总预算:</label>
-        <div class="input-container">
-          <span>¥</span>
-          <input
-            type="number"
-            id="budget-input"
-            v-model.number="budget"
-            placeholder="输入您的总预算"
-            min="0"
-            step="0.01"
-          >
+      <!-- Tool card -->
+      <div class="tool-card">
+
+        <header class="tool-header">
+          <h1>日常开支计算器</h1>
+          <p>轻松记录和计算您的每一笔花费</p>
+        </header>
+
+        <div class="input-group">
+          <label for="budget-input">总预算</label>
+          <div class="input-prefix-wrap">
+            <span class="input-prefix">¥</span>
+            <input
+              type="number"
+              id="budget-input"
+              v-model.number="budget"
+              placeholder="输入您的总预算"
+              min="0"
+              step="0.01"
+            >
+          </div>
         </div>
+
+        <transition-group name="list" tag="div" class="item-list">
+          <div
+            v-for="item in items"
+            :key="item.id"
+            class="item-row"
+            :class="{ 'is-disabled': !item.enabled }"
+          >
+            <input type="checkbox" v-model="item.enabled" class="item-toggle">
+            <input
+              type="text"
+              v-model="item.name"
+              :disabled="!item.enabled"
+              class="item-description"
+              placeholder="费用说明（如：咖啡）"
+            >
+            <input
+              type="number"
+              v-model.number="item.amount"
+              :disabled="!item.enabled"
+              class="item-amount"
+              placeholder="金额"
+              min="0"
+              step="0.01"
+            >
+            <button @click="removeItem(item.id)" class="item-remove" title="删除">✕</button>
+          </div>
+        </transition-group>
+
+        <button @click="addItem" class="add-btn">＋ 增加一个项目</button>
+
+        <hr class="divider">
+
+        <div class="summary">
+          <div class="summary-row">
+            <span class="summary-label">总计</span>
+            <span class="summary-value total">¥ {{ totalAmount.toFixed(2) }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">剩余预算</span>
+            <span class="summary-value remaining" :class="remainingAmount < 0 ? 'is-neg' : 'is-pos'">
+              ¥ {{ remainingAmount.toFixed(2) }}
+            </span>
+          </div>
+        </div>
+
       </div>
-
-      <transition-group name="list" tag="div" class="item-list">
-        <div
-          v-for="item in items"
-          :key="item.id"
-          class="item-row"
-          :class="{ 'is-disabled': !item.enabled }"
-        >
-          <input
-            type="checkbox"
-            v-model="item.enabled"
-            class="item-toggle"
-          >
-          <input
-            type="text"
-            v-model="item.name"
-            :disabled="!item.enabled"
-            class="item-description"
-            placeholder="费用说明 (例如: 咖啡)"
-          >
-          <input
-            type="number"
-            v-model.number="item.amount"
-            :disabled="!item.enabled"
-            class="item-amount"
-            placeholder="金额"
-            min="0"
-            step="0.01"
-          >
-          <button @click="removeItem(item.id)" class="item-remove-btn" title="删除项目">
-            ✕
-          </button>
-        </div>
-      </transition-group>
-
-      <button @click="addItem" class="add-item-btn">
-        ＋ 增加一个新项目
-      </button>
-
-      <hr class="separator">
-
-      <div class="summary-panel">
-        <div class="summary-row">
-          <span class="summary-label">总计:</span>
-          <span class="summary-value total-amount">¥ {{ totalAmount.toFixed(2) }}</span>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label">剩余预算:</span>
-          <span
-            class="summary-value remaining-amount"
-            :class="remainingAmount < 0 ? 'is-negative' : 'is-positive'"
-          >
-            ¥ {{ remainingAmount.toFixed(2) }}
-          </span>
-        </div>
-      </div>
-
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+
 useSeoMeta({
   title: '日常开支计算器',
-  description: '懒人账单 快捷记账 在线预算 简易出入账估算计算器',
-  ogTitle: 'aki', // Open Graph 标题，用于社交分享
-  // ... 其他SEO相关的 meta 标签
+  description: '懒人账单，快捷记账，在线预算，简易出入账估算计算器',
 })
 
-// 定义项目的数据结构接口
 interface Item {
   id: string;
   name: string;
@@ -99,283 +95,217 @@ interface Item {
   enabled: boolean;
 }
 
-// 使用 ref 创建响应式数据
 const budget = ref<number | null>(null);
-const items = ref<Item[]>([
-  // 初始数据
-  { id: crypto.randomUUID(), name: '午餐', amount: 25, enabled: true },
-  { id: crypto.randomUUID(), name: '地铁通勤', amount: 8, enabled: true },
-  { id: crypto.randomUUID(), name: '电影票', amount: 50, enabled: false },
+const items  = ref<Item[]>([
+  { id: crypto.randomUUID(), name: '午餐',   amount: 25, enabled: true  },
+  { id: crypto.randomUUID(), name: '地铁通勤', amount: 8,  enabled: true  },
+  { id: crypto.randomUUID(), name: '电影票',  amount: 50, enabled: false },
 ]);
 
-// 计算总开销
-const totalAmount = computed(() => {
-  return items.value
-    .filter(item => item.enabled) // 只计算启用的项目
-    .reduce((total, item) => total + (Number(item.amount) || 0), 0);
-});
+const totalAmount = computed(() =>
+  items.value
+    .filter(i => i.enabled)
+    .reduce((sum, i) => sum + (Number(i.amount) || 0), 0)
+);
 
-// 计算剩余预算
-const remainingAmount = computed(() => {
-  const budgetValue = Number(budget.value) || 0;
-  return budgetValue - totalAmount.value;
-});
+const remainingAmount = computed(() =>
+  (Number(budget.value) || 0) - totalAmount.value
+);
 
-// 方法：增加一个新项目
 const addItem = () => {
-  items.value.push({
-    id: crypto.randomUUID(),
-    name: '',
-    amount: null,
-    enabled: true,
-  });
+  items.value.push({ id: crypto.randomUUID(), name: '', amount: null, enabled: true });
 };
 
-// 方法：根据ID移除一个项目
 const removeItem = (id: string) => {
-  items.value = items.value.filter(item => item.id !== id);
+  items.value = items.value.filter(i => i.id !== id);
 };
 </script>
 
-<style>
-:root {
-  --color-bg: #f1f5f9;
-  --color-card-bg: #ffffff;
-  --color-text-primary: #1e293b;
-  --color-text-secondary: #64748b;
-  --color-border: #cbd5e1;
-  --color-accent: #3b82f6;
-  --color-accent-dark: #2563eb;
-  --color-danger: #ef4444;
-  --color-danger-dark: #dc2626;
-  --color-success: #16a34a;
-  --font-main: 'Inter', 'Noto Sans SC', sans-serif;
-}
-</style>
-
 <style scoped>
-.calculator-wrapper {
-  background-color: var(--color-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 1.5rem;
-  font-family: var(--font-main);
+/* ── Page shell ───────────────────────────────────────── */
+.tool-page {
+  padding: 1.5rem var(--page-pad) 3rem;
 }
-
-.calculator-card {
-  width: 100%;
+.tool-page-inner {
   max-width: 680px;
-  background-color: var(--color-card-bg);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  padding: 2.5rem;
+  margin: 0 auto;
 }
 
-.calculator-header {
+/* ── Back link ────────────────────────────────────────── */
+.tool-back { margin-bottom: 1.25rem; }
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-text-2);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.back-link:hover {
+  color: var(--c-accent);
+  border-color: var(--c-accent-muted);
+  background: var(--c-accent-bg);
+}
+
+/* ── Card ─────────────────────────────────────────────── */
+.tool-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Header ───────────────────────────────────────────── */
+.tool-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
-
-.calculator-header h1 {
-  font-size: 2rem;
+.tool-header h1 {
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: var(--c-text-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
 }
+.tool-header p { font-size: 0.9rem; color: var(--c-text-2); }
 
-.calculator-header p {
-  color: var(--color-text-secondary);
-  margin-top: 0.5rem;
-}
-
-.input-group {
-  margin-bottom: 2rem;
-  /* padding-left: 1.9rem; */
-   /* 1.15rem (复选框宽度) + 0.75rem (间距) */
-}
-
+/* ── Budget input ─────────────────────────────────────── */
+.input-group { margin-bottom: 1.5rem; }
 .input-group label {
   display: block;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--c-text-1);
+  margin-bottom: 0.5rem;
 }
-
-.input-container {
-  position: relative;
-}
-
-.input-container span {
+.input-prefix-wrap { position: relative; }
+.input-prefix {
   position: absolute;
+  left: 0.9rem;
   top: 50%;
-  left: 1rem;
   transform: translateY(-50%);
-  color: var(--color-text-secondary);
-  font-size: 1rem;
+  color: var(--c-text-3);
+  font-size: 0.9rem;
+  pointer-events: none;
 }
 
-/* 通用输入框样式 */
+/* ── Shared input styles ──────────────────────────────── */
 input[type="number"],
 input[type="text"] {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.input-container input {
-  padding-left: 2.5rem;
-}
-
-input:focus {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--c-text-1);
+  background: var(--c-surface);
+  transition: border-color 0.18s, box-shadow 0.18s;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-  border-color: var(--color-accent);
 }
+input[type="number"]:focus,
+input[type="text"]:focus {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-bg);
+}
+input:disabled {
+  background: var(--c-surface-2);
+  color: var(--c-text-3);
+}
+.input-prefix-wrap input { padding-left: 2.2rem; }
 
-/* 项目列表 */
+/* ── Item list ────────────────────────────────────────── */
 .item-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
 }
-
 .item-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  transition: opacity 0.3s ease;
+  gap: 0.6rem;
+  transition: opacity 0.25s;
 }
+.item-row.is-disabled { opacity: 0.45; }
+.item-row.is-disabled .item-description { text-decoration: line-through; }
 
 .item-toggle {
   flex-shrink: 0;
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--c-accent);
   cursor: pointer;
-  accent-color: var(--color-accent); /* Changed from danger to accent for consistency */
 }
+.item-description { flex: 1; }
+.item-amount      { width: 110px; flex-shrink: 0; }
 
-.item-description {
-  flex-grow: 1; /* 占据剩余空间 */
-}
-
-.item-amount {
-  width: 120px;
-}
-
-.item-remove-btn {
+.item-remove {
   flex-shrink: 0;
-  background-color: #f8fafc;
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
+  width: 30px;
+  height: 30px;
+  background: var(--c-surface-2);
+  color: var(--c-text-3);
+  border: 1px solid var(--c-border);
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.item-remove:hover {
+  background: var(--c-danger-bg);
+  color: var(--c-danger);
+  border-color: var(--c-danger);
 }
 
-.item-remove-btn:hover {
-  background-color: var(--color-danger);
-  color: white;
-  border-color: var(--color-danger);
-}
-
-/* 禁用状态 */
-.item-row.is-disabled {
-  opacity: 0.5;
-}
-
-.item-row.is-disabled .item-description {
-  text-decoration: line-through;
-}
-
-/* 添加按钮 */
-.add-item-btn {
-  margin-top: 1.5rem;
+/* ── Add button ───────────────────────────────────────── */
+.add-btn {
+  margin-top: 0.35rem;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: var(--color-accent);
-  color: white;
-  font-weight: 500;
-  padding: 0.8rem 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
+  padding: 0.65rem 1rem;
+  background: var(--c-accent-bg);
+  color: var(--c-accent);
+  border: 1px solid var(--c-accent-muted);
+  border-radius: var(--r-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.15s, border-color 0.15s;
 }
+.add-btn:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
 
-.add-item-btn:hover {
-  background-color: var(--color-accent-dark);
-}
+/* ── Divider ──────────────────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--c-border); margin: 1.5rem 0; }
 
-/* 分割线 */
-.separator {
-  margin: 2rem 0;
-  border: none;
-  border-top: 1px solid #e2e8f0;
-}
-
-/* 结果面板 */
-.summary-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
+/* ── Summary ──────────────────────────────────────────── */
+.summary { display: flex; flex-direction: column; gap: 0.75rem; }
 .summary-row {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
 }
+.summary-label { font-size: 1rem; color: var(--c-text-2); font-weight: 500; }
+.summary-value { font-weight: 700; }
+.total         { font-size: 1.6rem; color: var(--c-accent); }
+.remaining     { font-size: 1.4rem; }
+.is-pos        { color: var(--c-success); }
+.is-neg        { color: var(--c-danger);  }
 
-.summary-label {
-  font-size: 1.1rem;
-  color: var(--color-text-primary);
-}
+/* ── List animation ───────────────────────────────────── */
+.list-enter-active, .list-leave-active { transition: all 0.3s ease; }
+.list-enter-from, .list-leave-to { opacity: 0; transform: translateX(-16px); }
 
-.summary-value {
-  font-weight: 700;
-}
-
-.total-amount {
-  font-size: 1.75rem;
-  color: var(--color-accent);
-}
-
-.remaining-amount {
-  font-size: 1.5rem;
-}
-
-.remaining-amount.is-positive {
-  color: var(--color-success);
-}
-
-.remaining-amount.is-negative {
-  color: var(--color-danger);
-}
-
-/* 列表过渡动画 */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.4s ease;
-}
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
+/* ── Mobile ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .tool-page { padding: 1rem var(--page-pad) 2rem; }
+  .tool-card { padding: 1.25rem 1rem 1.25rem; border-radius: var(--r-lg); }
+  .item-amount { width: 90px; }
 }
 </style>

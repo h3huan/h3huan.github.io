@@ -78,6 +78,35 @@
         </div>
 
       </div>
+
+      <!-- 工具说明 -->
+      <article class="tool-desc">
+        <h2>关于 Markdown 表格与 Excel 双向转换</h2>
+        <p>在写 Markdown 文档和使用 Excel 处理数据之间反复切换时，手动重新排版表格既费时又容易出错。本工具提供双向一键转换：将 Markdown 表格转成可直接粘贴到 Excel 的制表符格式，或将 Excel 数据转成标准 Markdown 表格语法。</p>
+        <h3>Markdown → Excel 使用方法</h3>
+        <ol>
+          <li>把 Markdown 表格（包含 <code>|</code> 分隔符的格式）粘贴到输入框</li>
+          <li>点击「复制」，在 Excel 中选中目标单元格后 <code>Ctrl+V</code> 粘贴，列结构自动对齐</li>
+        </ol>
+        <h3>Excel → Markdown 使用方法</h3>
+        <ol>
+          <li>在 Excel 中选中表格区域，<code>Ctrl+C</code> 复制</li>
+          <li>粘贴到输入框，工具自动生成列宽对齐的标准 Markdown 表格</li>
+        </ol>
+        <h3>Markdown 表格语法说明</h3>
+        <p>标准 Markdown 表格由三部分组成：表头行（<code>| 列名 | 列名 |</code>）、分隔行（<code>| --- | --- |</code>）和数据行。生成的 Markdown 在 GitHub、Notion、Typora、Obsidian 等平台均可直接渲染为表格。</p>
+      </article>
+
+      <!-- 相关工具 -->
+      <nav class="related-tools">
+        <p class="related-title">相关工具</p>
+        <div class="related-links">
+          <NuxtLink to="/comma-separator" class="related-link">✂️ 逗号分隔器</NuxtLink>
+          <NuxtLink to="/caculate" class="related-link">🧾 简易算帐</NuxtLink>
+          <NuxtLink to="/currency" class="related-link">💱 汇率计算器</NuxtLink>
+        </div>
+      </nav>
+
     </div>
   </div>
 </template>

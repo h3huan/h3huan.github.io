@@ -88,6 +88,32 @@
 
         </div>
       </div>
+
+      <!-- 工具说明 -->
+      <article class="tool-desc">
+        <h2>关于函数绘图器</h2>
+        <p>在线数学函数可视化工具，在笛卡尔坐标系中实时绘制函数图像。支持最多同时绘制 4 条曲线，坐标系可自由缩放和平移，适合验证数学计算结果、辅助教学演示或探索函数行为规律。</p>
+        <h3>支持的函数与符号</h3>
+        <p>三角函数：<code>sin(x)</code>、<code>cos(x)</code>、<code>tan(x)</code>；反三角：<code>asin</code>、<code>acos</code>、<code>atan</code>；指数与对数：<code>exp(x)</code>（即 eˣ）、<code>log(x)</code>（自然对数）；其他：<code>sqrt(x)</code>（平方根）、<code>abs(x)</code>（绝对值）、<code>ceil</code>、<code>floor</code>；常数：<code>pi</code>（π）、<code>e</code>；乘方用 <code>^</code>，如 <code>x^2</code> 表示 x²，乘法用 <code>*</code>。</p>
+        <h3>操作说明</h3>
+        <ol>
+          <li>在函数输入框中输入表达式，如 <code>sin(x)</code> 或 <code>x^2 - 2*x + 1</code>，图像实时更新</li>
+          <li>鼠标滚轮缩放坐标系；按住鼠标拖拽平移视图；点击「重置」还原初始视角</li>
+          <li>点击「添加函数」可叠加多条曲线（最多 4 条）对比，每条曲线颜色不同</li>
+          <li>移动鼠标到画布上可实时读取当前坐标值；触屏设备支持双指捏合缩放</li>
+        </ol>
+      </article>
+
+      <!-- 相关工具 -->
+      <nav class="related-tools">
+        <p class="related-title">相关工具</p>
+        <div class="related-links">
+          <NuxtLink to="/caculate" class="related-link">🧾 简易算帐</NuxtLink>
+          <NuxtLink to="/currency" class="related-link">💱 汇率计算器</NuxtLink>
+          <NuxtLink to="/comma-separator" class="related-link">✂️ 逗号分隔器</NuxtLink>
+        </div>
+      </nav>
+
     </div>
   </div>
 </template>

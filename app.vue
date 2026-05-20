@@ -173,3 +173,85 @@ img { display: block; max-width: 100%; }
   .nav-link  { padding: 0.3rem 0.5rem; font-size: 0.8125rem; }
 }
 </style>
+
+<style>
+/* ── Tool description block (shared across tool pages) ── */
+.tool-desc {
+  margin-top: 1.75rem;
+  padding: 1.5rem 1.75rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.tool-desc h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-text-1);
+  letter-spacing: -0.01em;
+}
+.tool-desc h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--c-text-1);
+  margin-top: 0.2rem;
+}
+.tool-desc p {
+  font-size: 0.875rem;
+  color: var(--c-text-2);
+  line-height: 1.8;
+}
+.tool-desc ol {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.tool-desc li {
+  font-size: 0.875rem;
+  color: var(--c-text-2);
+  line-height: 1.7;
+}
+.tool-desc strong { color: var(--c-text-1); font-weight: 600; }
+.tool-desc code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.8em;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  color: var(--c-accent);
+}
+
+/* ── Related tools nav (shared across tool pages) ──────── */
+.related-tools { margin-top: 1.25rem; margin-bottom: 0.5rem; }
+.related-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--c-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.55rem;
+}
+.related-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 99px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--c-text-2);
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.related-link:hover {
+  color: var(--c-accent);
+  border-color: var(--c-accent-muted);
+  background: var(--c-accent-bg);
+}
+</style>

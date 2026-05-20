@@ -76,6 +76,31 @@
         </div>
 
       </div>
+
+      <!-- 工具说明 -->
+      <article class="tool-desc">
+        <h2>关于日常开支计算器</h2>
+        <p>轻量级在线预算跟踪工具，帮助你随时记录和核算日常开销，无需下载任何 App，打开即用。适合旅行费用核算、聚餐均摊、月末账单整理等一次性临时计算场景。</p>
+        <h3>使用方法</h3>
+        <ol>
+          <li>在顶部输入你的<strong>总预算</strong>（例如出行费用上限或月度预算）</li>
+          <li>点击「＋ 增加一个项目」逐条添加每笔支出，填写名称和金额</li>
+          <li>通过复选框临时排除某项，底部实时显示合计与剩余预算；红色表示超支</li>
+        </ol>
+        <h3>适用场景</h3>
+        <p>旅行前预估各项花费是否超出预算；聚餐时快速合计人均份额；月底对账时逐项核查账单；临时估算采购清单的总金额。工具完全运行在浏览器本地，数据不会上传，关闭页面后自动清空。</p>
+      </article>
+
+      <!-- 相关工具 -->
+      <nav class="related-tools">
+        <p class="related-title">相关工具</p>
+        <div class="related-links">
+          <NuxtLink to="/currency" class="related-link">💱 汇率计算器</NuxtLink>
+          <NuxtLink to="/function-plot" class="related-link">📈 函数绘图器</NuxtLink>
+          <NuxtLink to="/comma-separator" class="related-link">✂️ 逗号分隔器</NuxtLink>
+        </div>
+      </nav>
+
     </div>
   </div>
 </template>

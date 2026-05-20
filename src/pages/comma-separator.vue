@@ -63,6 +63,30 @@
         </div>
       </div>
 
+      <!-- 工具说明 -->
+      <article class="tool-desc">
+        <h2>关于逗号分隔器</h2>
+        <p>将多行文本一键转换为逗号分隔格式。最典型的使用场景是拼写 SQL 的 IN 查询：从系统里复制一列 ID 或名称，粘贴进来，一键转成 <code>WHERE id IN ('a', 'b', 'c')</code> 所需的格式，省去手动逐行添加引号和逗号的繁琐操作。</p>
+        <h3>使用方法</h3>
+        <ol>
+          <li>在输入框中每行粘贴一个值（从 Excel、Notepad 或终端复制均可）</li>
+          <li>选择输出格式：<strong>逗号分隔</strong>（<code>a, b, c</code>）或<strong>单引号分隔</strong>（<code>'a', 'b', 'c'</code>）</li>
+          <li>点击「复制」按钮，结果直接进入剪贴板，粘贴即用</li>
+        </ol>
+        <h3>适用场景</h3>
+        <p>拼写 SQL IN 语句时批量处理 ID 或名称列表；将 Excel 某列数据转成 Python/JavaScript 数组字面量；整理接口请求参数时把多行条目格式化成单行传参；快速统计行数（输入框右上角实时显示项目数）。工具完全在浏览器端处理，不联网、无任何数据存储。</p>
+      </article>
+
+      <!-- 相关工具 -->
+      <nav class="related-tools">
+        <p class="related-title">相关工具</p>
+        <div class="related-links">
+          <NuxtLink to="/md-excel" class="related-link">📊 Markdown ↔ Excel</NuxtLink>
+          <NuxtLink to="/caculate" class="related-link">🧾 简易算帐</NuxtLink>
+          <NuxtLink to="/currency" class="related-link">💱 汇率计算器</NuxtLink>
+        </div>
+      </nav>
+
     </div>
   </div>
 </template>

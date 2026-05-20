@@ -110,6 +110,31 @@
           </p>
         </template>
       </div>
+
+      <!-- 工具说明 -->
+      <article class="tool-desc">
+        <h2>关于汇率计算器</h2>
+        <p>基于欧洲央行（ECB）发布的每日汇率数据，支持人民币、美元、欧元、英镑、日元、港元、韩元、新加坡元、澳元、加拿大元、瑞士法郎等 20 种主要货币之间的实时换算，数据每天更新。</p>
+        <h3>使用方法</h3>
+        <ol>
+          <li>在「从」一栏选择源货币并输入金额，「到」一栏实时显示换算结果</li>
+          <li>点击 ⇅ 按钮互换两种货币；底部参考汇率表列出 1 单位源货币对各主要货币的换算值</li>
+          <li>使用快速切换按钮（USD / EUR / JPY 等）快速切换目标货币</li>
+        </ol>
+        <h3>适用场景</h3>
+        <p>海淘购物时核算商品实际人民币价格；出境旅游前换算需要携带的外币金额；跨境转账时估算到账金额；了解当日主要货币汇率行情。注意：本工具数据仅供参考，实际汇率以各银行或交易平台为准，购汇/售汇会有一定点差。</p>
+      </article>
+
+      <!-- 相关工具 -->
+      <nav class="related-tools">
+        <p class="related-title">相关工具</p>
+        <div class="related-links">
+          <NuxtLink to="/caculate" class="related-link">🧾 简易算帐</NuxtLink>
+          <NuxtLink to="/function-plot" class="related-link">📈 函数绘图器</NuxtLink>
+          <NuxtLink to="/comma-separator" class="related-link">✂️ 逗号分隔器</NuxtLink>
+        </div>
+      </nav>
+
     </div>
   </div>
 </template>

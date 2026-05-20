@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($paths = @\\(\"C:\\\\Program Files\\\\Git\\\\cmd\\\\git.exe\", \"C:\\\\Program Files \\(x86\\)\\\\Git\\\\cmd\\\\git.exe\", \"D:\\\\Program Files\\\\Git\\\\cmd\\\\git.exe\", \"D:\\\\Git\\\\cmd\\\\git.exe\"\\); foreach \\($p in $paths\\) { if \\(Test-Path $p\\) { Write-Output \"Found: $p\" } })"
+    ]
+  }
+}

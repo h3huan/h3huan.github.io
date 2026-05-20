@@ -8,7 +8,7 @@ export default defineNuxtConfig({
       title: '施工中',
       htmlAttrs: { lang: 'zh-CN' },
       meta: [
-        { name: 'google-site-verification', content: 'pmvDj44iSfn-8rbSAyNAo9sXYd1nEJquRW-ptRoRbvc' },
+        { name: 'google-site-verification', content: 'pmvDj44iSf  n-8rbSAyNAo9sXYd1nEJquRW-ptRoRbvc' },
         { property: 'og:type',      content: 'website' },
         { property: 'og:site_name', content: 'Toool' },
         { name: 'twitter:card',     content: 'summary' },

@@ -32,7 +32,7 @@ export default defineNuxtConfig({
 
   // nuxt-site-config — 被 sitemap / robots 模块共同读取
   site: {
-    url: 'https://toool.eu.cc',
+    url: 'https://h3huan.github.io',
     name: 'Toool',
     description: '没有半点帮助的小工具集合，在线使用，无需安装',
     defaultLocale: 'zh-CN',

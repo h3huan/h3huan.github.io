@@ -1,7 +1,6 @@
 <template>
   <div class="tool-page">
     <div class="tool-page-inner">
-
       <nav class="tool-back">
         <NuxtLink to="/" class="back-link">← 返回主页</NuxtLink>
       </nav>
@@ -9,7 +8,7 @@
       <div class="tool-card">
         <header class="tool-header">
           <h1>汇率计算器</h1>
-          <p>实时汇率换算，数据来源：欧洲央行</p>
+          <p>实时汇率换算，数据来源：fawazahmed0/currency-api</p>
         </header>
 
         <!-- Loading -->
@@ -28,7 +27,11 @@
           <div class="exchange-block">
             <label class="block-label">从</label>
             <div class="exchange-row">
-              <select v-model="fromCode" class="currency-select" @change="calcTo">
+              <select
+                v-model="fromCode"
+                class="currency-select"
+                @change="calcTo"
+              >
                 <option v-for="c in currencies" :key="c.code" :value="c.code">
                   {{ c.flag }} {{ c.code }} — {{ c.name }}
                 </option>
@@ -40,7 +43,7 @@
                 placeholder="0"
                 min="0"
                 @input="calcTo"
-              >
+              />
             </div>
           </div>
 
@@ -68,7 +71,7 @@
                 placeholder="0"
                 min="0"
                 @input="calcFrom"
-              >
+              />
             </div>
           </div>
 
@@ -81,8 +84,13 @@
                 :key="code"
                 class="chip"
                 :class="{ 'chip--active': toCode === code }"
-                @click="toCode = code; calcTo()"
-              >{{ code }}</button>
+                @click="
+                  toCode = code;
+                  calcTo();
+                "
+              >
+                {{ code }}
+              </button>
             </div>
           </div>
 
@@ -94,7 +102,10 @@
                 v-for="c in refCurrencies"
                 :key="c.code"
                 class="ref-row"
-                @click="toCode = c.code; calcTo()"
+                @click="
+                  toCode = c.code;
+                  calcTo();
+                "
                 :class="{ 'ref-row--active': toCode === c.code }"
               >
                 <span class="ref-flag">{{ c.flag }}</span>
@@ -114,15 +125,25 @@
       <!-- 工具说明 -->
       <article class="tool-desc">
         <h2>关于汇率计算器</h2>
-        <p>基于欧洲央行（ECB）发布的每日汇率数据，支持人民币、美元、欧元、英镑、日元、港元、韩元、新加坡元、澳元、加拿大元、瑞士法郎等 20 种主要货币之间的实时换算，数据每天更新。</p>
+        <p>
+          基于开源汇率项目 fawazahmed0/currency-api 发布的每日汇率数据，通过
+          jsDelivr CDN
+          加速获取，支持人民币、美元、欧元、英镑、日元、港元、韩元、新加坡元、澳元、加拿大元、瑞士法郎等
+          20 种主要货币之间的实时换算，数据每天更新。
+        </p>
         <h3>使用方法</h3>
         <ol>
           <li>在「从」一栏选择源货币并输入金额，「到」一栏实时显示换算结果</li>
-          <li>点击 ⇅ 按钮互换两种货币；底部参考汇率表列出 1 单位源货币对各主要货币的换算值</li>
+          <li>
+            点击 ⇅ 按钮互换两种货币；底部参考汇率表列出 1
+            单位源货币对各主要货币的换算值
+          </li>
           <li>使用快速切换按钮（USD / EUR / JPY 等）快速切换目标货币</li>
         </ol>
         <h3>适用场景</h3>
-        <p>海淘购物时核算商品实际人民币价格；出境旅游前换算需要携带的外币金额；跨境转账时估算到账金额；了解当日主要货币汇率行情。注意：本工具数据仅供参考，实际汇率以各银行或交易平台为准，购汇/售汇会有一定点差。</p>
+        <p>
+          海淘购物时核算商品实际人民币价格；出境旅游前换算需要携带的外币金额；跨境转账时估算到账金额；了解当日主要货币汇率行情。注意：本工具数据仅供参考，实际汇率以各银行或交易平台为准，购汇/售汇会有一定点差。
+        </p>
       </article>
 
       <!-- 相关工具 -->
@@ -130,257 +151,465 @@
         <p class="related-title">相关工具</p>
         <div class="related-links">
           <NuxtLink to="/caculate" class="related-link">🧾 简易算帐</NuxtLink>
-          <NuxtLink to="/function-plot" class="related-link">📈 函数绘图器</NuxtLink>
-          <NuxtLink to="/comma-separator" class="related-link">✂️ 逗号分隔器</NuxtLink>
+          <NuxtLink to="/function-plot" class="related-link"
+            >📈 函数绘图器</NuxtLink
+          >
+          <NuxtLink to="/comma-separator" class="related-link"
+            >✂️ 逗号分隔器</NuxtLink
+          >
         </div>
       </nav>
-
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from "vue";
 
 useSeoMeta({
-  title: '汇率计算器',
-  ogTitle: '汇率计算器 – Toool',
-  description: '实时汇率换算，支持人民币、美元、欧元、日元等主要货币，数据来源欧洲央行',
-  ogDescription: '实时汇率换算，支持人民币、美元、欧元、日元等主要货币，数据来源欧洲央行',
-})
+  title: "汇率计算器",
+  ogTitle: "汇率计算器 – Toool",
+  description:
+    "实时汇率换算，支持人民币、美元、欧元、日元等主要货币，数据来源欧洲央行",
+  ogDescription:
+    "实时汇率换算，支持人民币、美元、欧元、日元等主要货币，数据来源欧洲央行",
+});
 
 const currencies = [
-  { code: 'CNY', name: '人民币',         flag: '🇨🇳' },
-  { code: 'USD', name: '美元',           flag: '🇺🇸' },
-  { code: 'EUR', name: '欧元',           flag: '🇪🇺' },
-  { code: 'GBP', name: '英镑',           flag: '🇬🇧' },
-  { code: 'JPY', name: '日元',           flag: '🇯🇵' },
-  { code: 'HKD', name: '港元',           flag: '🇭🇰' },
-  { code: 'KRW', name: '韩元',           flag: '🇰🇷' },
-  { code: 'SGD', name: '新加坡元',       flag: '🇸🇬' },
-  { code: 'AUD', name: '澳大利亚元',     flag: '🇦🇺' },
-  { code: 'CAD', name: '加拿大元',       flag: '🇨🇦' },
-  { code: 'CHF', name: '瑞士法郎',       flag: '🇨🇭' },
-  { code: 'THB', name: '泰铢',           flag: '🇹🇭' },
-  { code: 'MYR', name: '马来西亚林吉特', flag: '🇲🇾' },
-  { code: 'INR', name: '印度卢比',       flag: '🇮🇳' },
-  { code: 'MXN', name: '墨西哥比索',     flag: '🇲🇽' },
-  { code: 'BRL', name: '巴西雷亚尔',     flag: '🇧🇷' },
-  { code: 'NZD', name: '新西兰元',       flag: '🇳🇿' },
-  { code: 'SEK', name: '瑞典克朗',       flag: '🇸🇪' },
-  { code: 'NOK', name: '挪威克朗',       flag: '🇳🇴' },
-  { code: 'ZAR', name: '南非兰特',       flag: '🇿🇦' },
-]
+  { code: "CNY", name: "人民币", flag: "🇨🇳" },
+  { code: "USD", name: "美元", flag: "🇺🇸" },
+  { code: "EUR", name: "欧元", flag: "🇪🇺" },
+  { code: "GBP", name: "英镑", flag: "🇬🇧" },
+  { code: "JPY", name: "日元", flag: "🇯🇵" },
+  { code: "HKD", name: "港元", flag: "🇭🇰" },
+  { code: "KRW", name: "韩元", flag: "🇰🇷" },
+  { code: "SGD", name: "新加坡元", flag: "🇸🇬" },
+  { code: "AUD", name: "澳大利亚元", flag: "🇦🇺" },
+  { code: "CAD", name: "加拿大元", flag: "🇨🇦" },
+  { code: "CHF", name: "瑞士法郎", flag: "🇨🇭" },
+  { code: "THB", name: "泰铢", flag: "🇹🇭" },
+  { code: "MYR", name: "马来西亚林吉特", flag: "🇲🇾" },
+  { code: "INR", name: "印度卢比", flag: "🇮🇳" },
+  { code: "MXN", name: "墨西哥比索", flag: "🇲🇽" },
+  { code: "BRL", name: "巴西雷亚尔", flag: "🇧🇷" },
+  { code: "NZD", name: "新西兰元", flag: "🇳🇿" },
+  { code: "SEK", name: "瑞典克朗", flag: "🇸🇪" },
+  { code: "NOK", name: "挪威克朗", flag: "🇳🇴" },
+  { code: "ZAR", name: "南非兰特", flag: "🇿🇦" },
+];
 
 // Currencies shown in the reference table
 const refCurrencies = [
-  { code: 'USD', name: '美元',       flag: '🇺🇸' },
-  { code: 'CNY', name: '人民币',     flag: '🇨🇳' },
-  { code: 'EUR', name: '欧元',       flag: '🇪🇺' },
-  { code: 'GBP', name: '英镑',       flag: '🇬🇧' },
-  { code: 'JPY', name: '日元',       flag: '🇯🇵' },
-  { code: 'HKD', name: '港元',       flag: '🇭🇰' },
-  { code: 'KRW', name: '韩元',       flag: '🇰🇷' },
-  { code: 'SGD', name: '新加坡元',   flag: '🇸🇬' },
-  { code: 'AUD', name: '澳大利亚元', flag: '🇦🇺' },
-  { code: 'CHF', name: '瑞士法郎',   flag: '🇨🇭' },
-].filter(c => c.code !== 'CNY' || true) // keep all, we'll filter by fromCode in template
+  { code: "USD", name: "美元", flag: "🇺🇸" },
+  { code: "CNY", name: "人民币", flag: "🇨🇳" },
+  { code: "EUR", name: "欧元", flag: "🇪🇺" },
+  { code: "GBP", name: "英镑", flag: "🇬🇧" },
+  { code: "JPY", name: "日元", flag: "🇯🇵" },
+  { code: "HKD", name: "港元", flag: "🇭🇰" },
+  { code: "KRW", name: "韩元", flag: "🇰🇷" },
+  { code: "SGD", name: "新加坡元", flag: "🇸🇬" },
+  { code: "AUD", name: "澳大利亚元", flag: "🇦🇺" },
+  { code: "CHF", name: "瑞士法郎", flag: "🇨🇭" },
+].filter((c) => c.code !== "CNY" || true); // keep all, we'll filter by fromCode in template
 
-const quickTargets = ['USD', 'EUR', 'GBP', 'JPY', 'HKD', 'KRW', 'SGD']
+const quickTargets = ["USD", "EUR", "GBP", "JPY", "HKD", "KRW", "SGD"];
 
 // State
-const loading  = ref(true)
-const fetchErr = ref(false)
-const rateDate = ref('')
+const loading = ref(true);
+const fetchErr = ref(false);
+const rateDate = ref("");
 // Rates are stored relative to EUR (ECB base). EUR itself = 1.
-const rates = ref<Record<string, number>>({})
+const rates = ref<Record<string, number>>({});
 
-const fromCode = ref('CNY')
-const toCode   = ref('USD')
-const fromAmt  = ref<number | null>(100)
-const toAmt    = ref<number | null>(null)
+const fromCode = ref("CNY");
+const toCode = ref("USD");
+const fromAmt = ref<number | null>(100);
+const toAmt = ref<number | null>(null);
 
 // Get EUR-based rate for a currency code
-const getEurRate = (code: string) => code === 'EUR' ? 1 : (rates.value[code] ?? 1)
+const getEurRate = (code: string) =>
+  code === "EUR" ? 1 : rates.value[code] ?? 1;
 
 // Cross rate: 1 fromCode = X toCode
 const crossRate = computed(() => {
-  const r = getEurRate(toCode.value) / getEurRate(fromCode.value)
-  if (r === 0) return '—'
-  if (r >= 1000) return r.toFixed(1)
-  if (r >= 10)   return r.toFixed(3)
-  if (r >= 1)    return r.toFixed(4)
-  return r.toFixed(5)
-})
+  const r = getEurRate(toCode.value) / getEurRate(fromCode.value);
+  if (r === 0) return "—";
+  if (r >= 1000) return r.toFixed(1);
+  if (r >= 10) return r.toFixed(3);
+  if (r >= 1) return r.toFixed(4);
+  return r.toFixed(5);
+});
 
 const calcTo = () => {
-  if (fromAmt.value == null) { toAmt.value = null; return }
-  const r = getEurRate(toCode.value) / getEurRate(fromCode.value)
-  const result = fromAmt.value * r
-  toAmt.value = parseFloat(result.toFixed(result >= 100 ? 2 : result >= 1 ? 4 : 6))
-}
+  if (fromAmt.value == null) {
+    toAmt.value = null;
+    return;
+  }
+  const r = getEurRate(toCode.value) / getEurRate(fromCode.value);
+  const result = fromAmt.value * r;
+  toAmt.value = parseFloat(
+    result.toFixed(result >= 100 ? 2 : result >= 1 ? 4 : 6)
+  );
+};
 
 const calcFrom = () => {
-  if (toAmt.value == null) { fromAmt.value = null; return }
-  const r = getEurRate(fromCode.value) / getEurRate(toCode.value)
-  const result = toAmt.value * r
-  fromAmt.value = parseFloat(result.toFixed(result >= 100 ? 2 : result >= 1 ? 4 : 6))
-}
+  if (toAmt.value == null) {
+    fromAmt.value = null;
+    return;
+  }
+  const r = getEurRate(fromCode.value) / getEurRate(toCode.value);
+  const result = toAmt.value * r;
+  fromAmt.value = parseFloat(
+    result.toFixed(result >= 100 ? 2 : result >= 1 ? 4 : 6)
+  );
+};
 
 const swap = () => {
-  ;[fromCode.value, toCode.value] = [toCode.value, fromCode.value]
-  calcTo()
-}
+  [fromCode.value, toCode.value] = [toCode.value, fromCode.value];
+  calcTo();
+};
 
 // Reference table rate: 1 fromCode = X c
 const getRefRate = (code: string) => {
-  if (code === fromCode.value) return '—'
-  const r = getEurRate(code) / getEurRate(fromCode.value)
-  if (r >= 10000) return r.toFixed(0)
-  if (r >= 100)   return r.toFixed(2)
-  if (r >= 1)     return r.toFixed(4)
-  return r.toFixed(5)
+  if (code === fromCode.value) return "—";
+  const r = getEurRate(code) / getEurRate(fromCode.value);
+  if (r >= 10000) return r.toFixed(0);
+  if (r >= 100) return r.toFixed(2);
+  if (r >= 1) return r.toFixed(4);
+  return r.toFixed(5);
+};
+
+watch([fromCode, toCode], calcTo);
+
+async function fetchRates() {
+  // Primary: jsDelivr CDN  Fallback: Cloudflare Pages
+  const urls = [
+    "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json",
+    "https://latest.currency-api.pages.dev/v1/currencies/eur.json",
+  ];
+  for (const url of urls) {
+    try {
+      const data = await fetch(url).then((r) => r.json());
+      // Keys are lowercase, convert to uppercase to match existing logic
+      const raw = data.eur as Record<string, number>;
+      const converted: Record<string, number> = {};
+      for (const [k, v] of Object.entries(raw)) converted[k.toUpperCase()] = v;
+      rates.value = converted;
+      rateDate.value = data.date as string;
+      return true;
+    } catch {
+      /* try next */
+    }
+  }
+  return false;
 }
 
-watch([fromCode, toCode], calcTo)
-
 onMounted(async () => {
-  try {
-    const data = await fetch('https://api.frankfurter.app/latest').then(r => r.json())
-    rates.value  = data.rates  // EUR-based rates from ECB
-    rateDate.value = data.date
-    loading.value = false
-    calcTo()
-  } catch {
-    fetchErr.value = true
-    loading.value  = false
+  const ok = await fetchRates();
+  loading.value = false;
+  if (!ok) {
+    fetchErr.value = true;
+    return;
   }
-})
+  calcTo();
+});
 </script>
 
 <style scoped>
-.tool-page { padding: 1.5rem var(--page-pad) 3rem; }
-.tool-page-inner { max-width: 600px; margin: 0 auto; }
+.tool-page {
+  padding: 1.5rem var(--page-pad) 3rem;
+}
+.tool-page-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
 
 /* Back */
-.tool-back { margin-bottom: 1.25rem; }
-.back-link {
-  display: inline-flex; align-items: center; gap: .35rem;
-  font-size: .875rem; font-weight: 500; color: var(--c-text-2);
-  padding: .3rem .7rem; border-radius: var(--r-md);
-  border: 1px solid var(--c-border); background: var(--c-surface);
-  transition: color .15s, background .15s, border-color .15s;
+.tool-back {
+  margin-bottom: 1.25rem;
 }
-.back-link:hover { color: var(--c-accent); border-color: var(--c-accent-muted); background: var(--c-accent-bg); }
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-text-2);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.back-link:hover {
+  color: var(--c-accent);
+  border-color: var(--c-accent-muted);
+  background: var(--c-accent-bg);
+}
 
 /* Card */
 .tool-card {
-  background: var(--c-surface); border: 1px solid var(--c-border);
-  border-radius: var(--r-xl); padding: 2rem;
-  box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 1.25rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
-.tool-header { text-align: center; }
-.tool-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--c-text-1); letter-spacing: -.02em; margin-bottom: .35rem; }
-.tool-header p  { font-size: .875rem; color: var(--c-text-2); }
+.tool-header {
+  text-align: center;
+}
+.tool-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-text-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+.tool-header p {
+  font-size: 0.875rem;
+  color: var(--c-text-2);
+}
 
 /* Loading */
-.loading-state { display: flex; align-items: center; gap: .75rem; justify-content: center; padding: 2rem; color: var(--c-text-2); }
-.spinner {
-  width: 20px; height: 20px;
-  border: 2px solid var(--c-border); border-top-color: var(--c-accent);
-  border-radius: 50%; animation: spin .7s linear infinite;
+.loading-state {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--c-text-2);
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--c-border);
+  border-top-color: var(--c-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Error */
 .msg--error {
-  padding: .7rem 1rem; border-radius: var(--r-md);
-  background: var(--c-danger-bg); border: 1px solid #fca5a5; color: var(--c-danger);
-  font-size: .875rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--r-md);
+  background: var(--c-danger-bg);
+  border: 1px solid #fca5a5;
+  color: var(--c-danger);
+  font-size: 0.875rem;
 }
 
 /* Exchange block */
-.exchange-block { display: flex; flex-direction: column; gap: .45rem; }
-.block-label { font-size: .78rem; font-weight: 600; color: var(--c-text-3); text-transform: uppercase; letter-spacing: .06em; }
+.exchange-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.block-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
 
 .exchange-row {
-  display: flex; gap: .6rem;
+  display: flex;
+  gap: 0.6rem;
 }
 .currency-select {
-  flex: 1; min-width: 0;
-  padding: .7rem .8rem;
-  border: 1px solid var(--c-border); border-radius: var(--r-md);
-  font-size: .875rem; font-family: inherit; color: var(--c-text-1);
-  background: var(--c-surface); outline: none;
-  transition: border-color .18s, box-shadow .18s;
+  flex: 1;
+  min-width: 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: var(--c-text-1);
+  background: var(--c-surface);
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
   cursor: pointer;
 }
-.currency-select:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px var(--c-accent-bg); }
+.currency-select:focus {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-bg);
+}
 
 .amount-input {
-  width: 140px; flex-shrink: 0;
-  padding: .7rem .8rem;
-  border: 1px solid var(--c-border); border-radius: var(--r-md);
-  font-size: 1.1rem; font-weight: 600; font-family: 'SF Mono', monospace;
-  color: var(--c-text-1); background: var(--c-surface); outline: none; text-align: right;
-  transition: border-color .18s, box-shadow .18s;
+  width: 140px;
+  flex-shrink: 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: "SF Mono", monospace;
+  color: var(--c-text-1);
+  background: var(--c-surface);
+  outline: none;
+  text-align: right;
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
-.amount-input:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px var(--c-accent-bg); }
+.amount-input:focus {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-accent-bg);
+}
 
 /* Swap */
-.swap-row { display: flex; align-items: center; gap: .75rem; }
+.swap-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 .swap-btn {
-  width: 38px; height: 38px; border-radius: 50%;
-  border: 1px solid var(--c-border); background: var(--c-surface);
-  font-size: 1.1rem; color: var(--c-text-2);
-  display: flex; align-items: center; justify-content: center;
-  transition: background .15s, border-color .15s, color .15s;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  font-size: 1.1rem;
+  color: var(--c-text-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
   flex-shrink: 0;
 }
-.swap-btn:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
-.rate-badge {
-  font-size: .85rem; color: var(--c-text-2);
-  background: var(--c-surface-2); border: 1px solid var(--c-border);
-  padding: .2rem .7rem; border-radius: 99px;
+.swap-btn:hover {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
 }
-.rate-badge b { color: var(--c-accent); }
+.rate-badge {
+  font-size: 0.85rem;
+  color: var(--c-text-2);
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  padding: 0.2rem 0.7rem;
+  border-radius: 99px;
+}
+.rate-badge b {
+  color: var(--c-accent);
+}
 
 /* Quick chips */
-.quick-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
-.quick-label { font-size: .78rem; color: var(--c-text-3); white-space: nowrap; }
-.quick-chips { display: flex; gap: .4rem; flex-wrap: wrap; }
-.chip {
-  padding: .2rem .6rem; border-radius: 99px; font-size: .78rem; font-weight: 600;
-  border: 1px solid var(--c-border); background: var(--c-surface-2); color: var(--c-text-2);
-  transition: background .15s, color .15s, border-color .15s;
+.quick-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
-.chip:hover, .chip--active { background: var(--c-accent-bg); color: var(--c-accent); border-color: var(--c-accent-muted); }
+.quick-label {
+  font-size: 0.78rem;
+  color: var(--c-text-3);
+  white-space: nowrap;
+}
+.quick-chips {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface-2);
+  color: var(--c-text-2);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.chip:hover,
+.chip--active {
+  background: var(--c-accent-bg);
+  color: var(--c-accent);
+  border-color: var(--c-accent-muted);
+}
 
 /* Reference table */
-.ref-table-wrap { background: var(--c-surface-2); border: 1px solid var(--c-border); border-radius: var(--r-lg); overflow: hidden; }
-.ref-title { padding: .6rem 1rem .4rem; font-size: .78rem; font-weight: 600; color: var(--c-text-3); text-transform: uppercase; letter-spacing: .06em; }
-.ref-table { display: flex; flex-direction: column; }
-.ref-row {
-  display: grid; grid-template-columns: 1.5rem 3rem 1fr auto;
-  align-items: center; gap: .5rem;
-  padding: .55rem 1rem;
-  border-top: 1px solid var(--c-border);
-  cursor: pointer; transition: background .12s;
+.ref-table-wrap {
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
 }
-.ref-row:hover    { background: var(--c-accent-bg); }
-.ref-row--active  { background: var(--c-accent-bg); }
-.ref-flag { font-size: 1rem; }
-.ref-code { font-size: .875rem; font-weight: 700; color: var(--c-text-1); }
-.ref-name { font-size: .8rem; color: var(--c-text-3); }
-.ref-val  { font-size: .9rem; font-weight: 600; color: var(--c-text-1); font-family: 'SF Mono', monospace; text-align: right; }
+.ref-title {
+  padding: 0.6rem 1rem 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.ref-table {
+  display: flex;
+  flex-direction: column;
+}
+.ref-row {
+  display: grid;
+  grid-template-columns: 1.5rem 3rem 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-top: 1px solid var(--c-border);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.ref-row:hover {
+  background: var(--c-accent-bg);
+}
+.ref-row--active {
+  background: var(--c-accent-bg);
+}
+.ref-flag {
+  font-size: 1rem;
+}
+.ref-code {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--c-text-1);
+}
+.ref-name {
+  font-size: 0.8rem;
+  color: var(--c-text-3);
+}
+.ref-val {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--c-text-1);
+  font-family: "SF Mono", monospace;
+  text-align: right;
+}
 
-.data-note { font-size: .78rem; color: var(--c-text-3); text-align: center; }
+.data-note {
+  font-size: 0.78rem;
+  color: var(--c-text-3);
+  text-align: center;
+}
 
 /* Mobile */
 @media (max-width: 520px) {
-  .tool-page { padding: 1rem var(--page-pad) 2rem; }
-  .tool-card { padding: 1.25rem 1rem; border-radius: var(--r-lg); }
-  .exchange-row { flex-direction: column; }
-  .amount-input { width: 100%; text-align: left; }
+  .tool-page {
+    padding: 1rem var(--page-pad) 2rem;
+  }
+  .tool-card {
+    padding: 1.25rem 1rem;
+    border-radius: var(--r-lg);
+  }
+  .exchange-row {
+    flex-direction: column;
+  }
+  .amount-input {
+    width: 100%;
+    text-align: left;
+  }
 }
 </style>

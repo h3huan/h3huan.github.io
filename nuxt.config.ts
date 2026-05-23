@@ -52,12 +52,12 @@ export default defineNuxtConfig({
     autoLastmod: true,
     xsl: false,
     urls: [
-      { loc: '/',                priority: 1.0, changefreq: 'weekly'  },
-      { loc: '/caculate',        priority: 0.8, changefreq: 'monthly' },
-      { loc: '/comma-separator', priority: 0.8, changefreq: 'monthly' },
-      { loc: '/md-excel',        priority: 0.8, changefreq: 'monthly' },
-      { loc: '/currency',        priority: 0.8, changefreq: 'daily'   }, 
-      { loc: '/function-plot',   priority: 0.8, changefreq: 'monthly' },
+      { loc: '/',                 priority: 1.0, changefreq: 'weekly'  },
+      { loc: '/caculate/',        priority: 0.8, changefreq: 'monthly' },
+      { loc: '/comma-separator/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/md-excel/',        priority: 0.8, changefreq: 'monthly' },
+      { loc: '/currency/',        priority: 0.8, changefreq: 'daily'   },
+      { loc: '/function-plot/',   priority: 0.8, changefreq: 'monthly' },
     ],
   },
 

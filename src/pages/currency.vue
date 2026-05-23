@@ -150,11 +150,11 @@
       <nav class="related-tools">
         <p class="related-title">相关工具</p>
         <div class="related-links">
-          <NuxtLink to="/caculate" class="related-link">🧾 简易算帐</NuxtLink>
-          <NuxtLink to="/function-plot" class="related-link"
+          <NuxtLink to="/caculate/" class="related-link">🧾 简易算帐</NuxtLink>
+          <NuxtLink to="/function-plot/" class="related-link"
             >📈 函数绘图器</NuxtLink
           >
-          <NuxtLink to="/comma-separator" class="related-link"
+          <NuxtLink to="/comma-separator/" class="related-link"
             >✂️ 逗号分隔器</NuxtLink
           >
         </div>

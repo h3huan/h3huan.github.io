@@ -115,11 +115,11 @@
       <nav class="related-tools">
         <p class="related-title">相关工具</p>
         <div class="related-links">
-          <NuxtLink to="/md-excel" class="related-link"
+          <NuxtLink to="/md-excel/" class="related-link"
             >📊 Markdown ↔ Excel</NuxtLink
           >
-          <NuxtLink to="/caculate" class="related-link">🧾 简易算帐</NuxtLink>
-          <NuxtLink to="/currency" class="related-link">💱 汇率计算器</NuxtLink>
+          <NuxtLink to="/caculate/" class="related-link">🧾 简易算帐</NuxtLink>
+          <NuxtLink to="/currency/" class="related-link">💱 汇率计算器</NuxtLink>
         </div>
       </nav>
     </div>

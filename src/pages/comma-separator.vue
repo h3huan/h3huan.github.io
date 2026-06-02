@@ -54,6 +54,30 @@
               <span class="radio-text">字符串列表（单引号）</span>
               <code class="preview">['a', 'b', 'c']</code>
             </label>
+            <label
+              class="radio-item"
+              :class="{ 'is-active': mode === 'list-number' }"
+            >
+              <input type="radio" v-model="mode" value="list-number" />
+              <span class="radio-text">数字列表</span>
+              <code class="preview">[1, 2, 3]</code>
+            </label>
+            <label
+              class="radio-item"
+              :class="{ 'is-active': mode === 'sql-in' }"
+            >
+              <input type="radio" v-model="mode" value="sql-in" />
+              <span class="radio-text">SQL IN（单引号）</span>
+              <code class="preview">('a', 'b', 'c')</code>
+            </label>
+            <label
+              class="radio-item"
+              :class="{ 'is-active': mode === 'sql-in-plain' }"
+            >
+              <input type="radio" v-model="mode" value="sql-in-plain" />
+              <span class="radio-text">SQL IN（无引号）</span>
+              <code class="preview">(a, b, c)</code>
+            </label>
           </div>
         </div>
 
@@ -80,6 +104,41 @@
             class="textarea textarea--output"
             rows="4"
             placeholder="转换结果将显示在这里…"
+            spellcheck="false"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- 反向解析 -->
+      <div class="tool-card reverse-card">
+        <header class="reverse-header">
+          <span class="field-label">反向解析</span>
+          <p class="reverse-desc">粘贴任意格式，自动拆回每行一个</p>
+        </header>
+
+        <div class="field">
+          <textarea
+            v-model="reverseInput"
+            class="textarea"
+            rows="3"
+            spellcheck="false"
+            placeholder='粘贴如 ["a","b","c"] 或 1,2,3 或 (&#39;a&#39;,&#39;b&#39;) …'
+          ></textarea>
+        </div>
+
+        <div class="field" v-if="reverseLines.length">
+          <div class="field-row">
+            <label class="field-label">解析结果</label>
+            <div class="field-meta">
+              <span class="count-tag">{{ reverseLines.length }} 项</span>
+              <button class="copy-btn" @click="fillFromReverse">填入输入框</button>
+            </div>
+          </div>
+          <textarea
+            :value="reverseLines.join('\n')"
+            readonly
+            class="textarea textarea--output"
+            rows="4"
             spellcheck="false"
           ></textarea>
         </div>
@@ -139,7 +198,7 @@ useSeoMeta({
 });
 
 const inputText = ref("");
-const mode = ref<"plain" | "quoted" | "list" | "list-single">("plain");
+const mode = ref<"plain" | "quoted" | "list" | "list-single" | "list-number" | "sql-in" | "sql-in-plain">("plain");
 const copied = ref(false);
 
 const lines = computed(() =>
@@ -158,8 +217,32 @@ const outputText = computed(() => {
     return lines.value.map((l) => `'${l}'`).join(", ");
   if (mode.value === "list")
     return "[" + lines.value.map((l) => `"${l}"`).join(", ") + "]";
-  return "[" + lines.value.map((l) => `'${l}'`).join(", ") + "]";
+  if (mode.value === "list-single")
+    return "[" + lines.value.map((l) => `'${l}'`).join(", ") + "]";
+  if (mode.value === "list-number")
+    return "[" + lines.value.join(", ") + "]";
+  if (mode.value === "sql-in")
+    return "(" + lines.value.map((l) => `'${l}'`).join(", ") + ")";
+  return "(" + lines.value.join(", ") + ")";
 });
+
+const reverseInput = ref("");
+
+const reverseLines = computed(() => {
+  const raw = reverseInput.value.trim();
+  if (!raw) return [];
+  const inner = raw.replace(/^[\[\(]|[\]\)]$/g, "");
+  return inner
+    .split(",")
+    .map((s) => s.trim().replace(/^(['"])(.*)\1$/, "$2"))
+    .filter((s) => s.length > 0);
+});
+
+const fillFromReverse = () => {
+  if (!reverseLines.value.length) return;
+  inputText.value = reverseLines.value.join("\n");
+  reverseInput.value = "";
+};
 
 const copyResult = async () => {
   if (!outputText.value) return;
@@ -364,6 +447,20 @@ const copyResult = async () => {
 }
 .copy-btn.is-copied {
   background: var(--c-success);
+}
+
+.reverse-card {
+  margin-top: 1rem;
+}
+.reverse-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.reverse-desc {
+  font-size: 0.8rem;
+  color: var(--c-text-3);
+  margin: 0;
 }
 
 /* Mobile */

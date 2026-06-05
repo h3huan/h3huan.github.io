@@ -86,7 +86,7 @@ useSeoMeta({
 const textTools = ref([
   { id: 'comma-sep', icon: '✂️', title: '逗号分隔器', description: '多行文本转逗号/引号分隔格式', url: '/comma-separator' },
   { id: 'md-excel',  icon: '📊', title: 'Markdown ↔ Excel', description: '表格格式双向转换', url: '/md-excel' },
-  { id: 'ph1', icon: '🔤', title: '施工中', description: '', url: '' },
+  { id: 'list-table', icon: '🗂️', title: '列表 ↔ 表格', description: '二维列表与 Markdown 表格互转', url: '/list-table' },
   { id: 'ph2', icon: '📋', title: '施工中', description: '', url: '' },
   { id: 'ph3', icon: '🔗', title: '施工中', description: '', url: '' },
   { id: 'ph4', icon: '📄', title: '施工中', description: '', url: '' },

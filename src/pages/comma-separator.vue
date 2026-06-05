@@ -8,7 +8,7 @@
       <div class="tool-card">
         <header class="tool-header">
           <h1>逗号分隔器</h1>
-          <p>将多行文本快速转换为逗号分隔格式</p>
+          <p>将每行文本（换行）快速转为逗号分隔格式</p>
         </header>
 
         <div class="field">
@@ -189,12 +189,14 @@
 import { ref, computed } from "vue";
 
 useSeoMeta({
-  title: "逗号分隔器",
-  ogTitle: "逗号分隔器 – Toool",
+  title: "换行转逗号 - 文本转逗号分隔/加单引号 SQL IN 拼接 - Toool",
+  ogTitle: "换行转逗号 - 文本转逗号分隔/加单引号 SQL IN 拼接 - Toool",
   description:
-    "将文本按行分割，快速转换为逗号分隔或逗号单引号分隔格式，适用于 SQL IN 查询等场景",
+    "把多行文本一键转成逗号分隔格式：换行转逗号、给每行加单引号/双引号、生成 SQL IN 查询列表、Excel 列转一行、转 Python/JS 数组。浏览器本地处理，不上传。",
   ogDescription:
-    "将文本按行分割，快速转换为逗号分隔或逗号单引号分隔格式，适用于 SQL IN 查询等场景",
+    "把多行文本一键转成逗号分隔格式：换行转逗号、给每行加单引号/双引号、生成 SQL IN 查询列表、Excel 列转一行、转 Python/JS 数组。浏览器本地处理，不上传。",
+  keywords:
+    "换行转逗号,逗号分隔器,文本转逗号分隔,sql in 拼接,加单引号,多行转逗号,excel列转逗号",
 });
 
 const inputText = ref("");

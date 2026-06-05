@@ -164,12 +164,14 @@
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 
 useSeoMeta({
-  title: "函数绘图器",
-  ogTitle: "函数绘图器 – Toool",
+  title: "在线函数绘图 - 函数图像生成器/画 sin cos 二次函数图 - Toool",
+  ogTitle: "在线函数绘图 - 函数图像生成器/画 sin cos 二次函数图 - Toool",
   description:
-    "在笛卡尔坐标系中绘制数学函数图像，支持 sin cos tan sqrt 等，可缩放平移",
+    "在线绘制数学函数图像，笛卡尔坐标系实时作图，支持三角函数、对数、平方根、绝对值等，可同时绘制多条曲线并缩放平移。适合验算、教学演示与函数探究。",
   ogDescription:
-    "在笛卡尔坐标系中绘制数学函数图像，支持 sin cos tan sqrt 等，可缩放平移",
+    "在线绘制数学函数图像，笛卡尔坐标系实时作图，支持三角函数、对数、平方根、绝对值等，可同时绘制多条曲线并缩放平移。适合验算、教学演示与函数探究。",
+  keywords:
+    "在线函数绘图,函数图像,函数绘图器,画函数图,数学作图,函数图像生成器,三角函数图像",
 });
 
 const BASE_SCALE = 60;

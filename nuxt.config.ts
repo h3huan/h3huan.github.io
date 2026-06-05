@@ -4,8 +4,8 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      titleTemplate: '%s – Toool',
-      title: '施工中',
+      titleTemplate: '%s',
+      title: 'Toool',
       htmlAttrs: { lang: 'zh-CN' },
       meta: [
         { name: 'google-site-verification', content: '2BaYC3W4-flE5M8oCdM-y0E9UP8sPGXuAceqx7rvfFc' },

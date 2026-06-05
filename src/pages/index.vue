@@ -76,10 +76,11 @@ import { ref } from 'vue'
 import ToolCard from '../components/ToolCard.vue'
 
 useSeoMeta({
-  title: '杂货箱',
-  ogTitle: '杂货箱 – Toool',
-  description: '没有半点帮助的小工具集合，在线使用，无需安装',
-  ogDescription: '没有半点帮助的小工具集合，在线使用，无需安装',
+  title: 'Toool 免费在线小工具箱 - 逗号分隔器·汇率换算·函数绘图',
+  ogTitle: 'Toool 免费在线小工具箱 - 逗号分隔器·汇率换算·函数绘图',
+  description: 'Toool 是一个免费的在线小工具集合，无需安装、打开即用：换行转逗号、实时汇率换算、函数图像绘制、Markdown 转 Excel、在线记账等实用小工具，全部在浏览器本地运行。',
+  ogDescription: 'Toool 是一个免费的在线小工具集合，无需安装、打开即用：换行转逗号、实时汇率换算、函数图像绘制、Markdown 转 Excel、在线记账等实用小工具，全部在浏览器本地运行。',
+  keywords: '在线工具箱,免费在线工具,实用小工具,逗号分隔器,汇率计算器,函数绘图,markdown转excel',
 })
 
 const textTools = ref([

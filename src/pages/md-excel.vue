@@ -115,10 +115,11 @@
 import { ref, computed } from 'vue';
 
 useSeoMeta({
-  title: 'Markdown 表格 ↔ Excel',
-  ogTitle: 'Markdown 表格 ↔ Excel – Toool',
-  description: 'Markdown 表格与 Excel 数据互相转换，支持一键复制粘贴',
-  ogDescription: 'Markdown 表格与 Excel 数据互相转换，支持一键复制粘贴',
+  title: 'Markdown 转 Excel - 表格双向转换/Excel 转 Markdown - Toool',
+  ogTitle: 'Markdown 转 Excel - 表格双向转换/Excel 转 Markdown - Toool',
+  description: 'Markdown 表格与 Excel 数据一键互转，复制粘贴即用，列结构自动对齐。生成的表格可直接在 GitHub、Notion、Typora、Obsidian 渲染。',
+  ogDescription: 'Markdown 表格与 Excel 数据一键互转，复制粘贴即用，列结构自动对齐。生成的表格可直接在 GitHub、Notion、Typora、Obsidian 渲染。',
+  keywords: 'markdown转excel,excel转markdown,markdown表格转换,md表格,表格转markdown,markdown表格生成器',
 })
 
 const tab = ref<'md2excel' | 'excel2md'>('md2excel');

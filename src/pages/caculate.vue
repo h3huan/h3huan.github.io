@@ -136,10 +136,13 @@
 import { ref, computed } from "vue";
 
 useSeoMeta({
-  title: "日常开支计算器",
-  ogTitle: "日常开支计算器 – Toool",
-  description: "懒人账单，快捷记账，在线预算，简易出入账估算计算器",
-  ogDescription: "懒人账单，快捷记账，在线预算，简易出入账估算计算器",
+  title: "开支预算计算器 - 在线简易记账/AA 分账实时算余额 - Toool",
+  ogTitle: "开支预算计算器 - 在线简易记账/AA 分账实时算余额 - Toool",
+  description:
+    "在线记账与预算核算工具，逐项记录支出、实时计算合计与剩余预算、超支提醒。适合旅行费用预估、聚餐 AA 均摊、月末对账，无需下载 App，数据本地不上传。",
+  ogDescription:
+    "在线记账与预算核算工具，逐项记录支出、实时计算合计与剩余预算、超支提醒。适合旅行费用预估、聚餐 AA 均摊、月末对账，无需下载 App，数据本地不上传。",
+  keywords: "在线记账,开支计算器,预算计算,简易记账本,aa分账,余额计算,旅行费用核算",
 });
 
 interface Item {

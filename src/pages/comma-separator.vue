@@ -18,7 +18,7 @@
             class="textarea"
             rows="8"
             spellcheck="false"
-            placeholder="每行输入一个值，例如：&#10;苹果&#10;香蕉&#10;橙子"
+            placeholder="每行一个值，或直接粘贴 Excel 某行（Tab 分隔），例如：&#10;苹果&#9;香蕉&#9;橙子"
           ></textarea>
         </div>
 
@@ -205,7 +205,7 @@ const copied = ref(false);
 
 const lines = computed(() =>
   inputText.value
-    .split("\n")
+    .split(/[\n\t]/)
     .map((l) => l.trim())
     .filter((l) => l.length > 0)
 );
@@ -233,6 +233,10 @@ const reverseInput = ref("");
 const reverseLines = computed(() => {
   const raw = reverseInput.value.trim();
   if (!raw) return [];
+  // Tab-separated (Excel row copy) — handle before stripping brackets
+  if (raw.includes("\t")) {
+    return raw.split("\t").map((s) => s.trim()).filter((s) => s.length > 0);
+  }
   const inner = raw.replace(/^[\[\(]|[\]\)]$/g, "");
   return inner
     .split(",")
